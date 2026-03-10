@@ -1,0 +1,358 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2025-12-09 00:29+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-SearchPath-0: helpers.py\n"
+
+#: helpers.py:121
+msgid "Photo date must be after semester start"
+msgstr "Photo date must be after semester start"
+
+#: helpers.py:314
+msgid "Tap anywhere to continue..."
+msgstr "Tap anywhere to continue..."
+
+#: helpers.py:346
+msgid "Select date"
+msgstr "Select date"
+
+#: helpers.py:347 helpers.py:376 helpers.py:1158 helpers.py:1173
+#: helpers.py:2112
+msgid "Ok"
+msgstr "Ok"
+
+#: helpers.py:348 helpers.py:377 helpers.py:1159 helpers.py:1174
+#: helpers.py:1366 helpers.py:1489 helpers.py:1581 helpers.py:1782
+msgid "Cancel"
+msgstr "Cancel"
+
+#: helpers.py:360 helpers.py:831
+msgid "Start Date"
+msgstr "Start Date"
+
+#: helpers.py:375
+msgid "Enter date"
+msgstr "Enter date"
+
+#: helpers.py:378
+msgid "Invalid date format"
+msgstr "Invalid date format"
+
+#: helpers.py:396
+msgid "Photos already selected! Clear them first."
+msgstr "Photos already selected! Clear them first."
+
+#: helpers.py:401
+msgid "Select Folder"
+msgstr "Select Folder"
+
+#: helpers.py:416
+msgid "Folder already selected! Clear it first."
+msgstr "Folder already selected! Clear it first."
+
+#: helpers.py:421 helpers.py:445 helpers.py:2180
+msgid "Select Photos"
+msgstr "Select Photos"
+
+#: helpers.py:427
+msgid "Photos Selected"
+msgstr "Photos Selected"
+
+#: helpers.py:439 helpers.py:2179
+msgid "Select Input Folder"
+msgstr "Select Input Folder"
+
+#: helpers.py:848
+msgid "Step 1: Select Date"
+msgstr "Step 1: Select Date"
+
+#: helpers.py:849
+msgid "Select semester start date from here."
+msgstr "Select semester start date from here."
+
+#: helpers.py:852
+msgid "Step 2: Select Folder"
+msgstr "Step 2: Select Folder"
+
+#: helpers.py:853
+msgid "Select a folder where your photos are..."
+msgstr "Select a folder where your photos are..."
+
+#: helpers.py:856
+msgid "...Or Photos"
+msgstr "...Or Photos"
+
+#: helpers.py:857
+msgid "...Or select photos one by one."
+msgstr "...Or select photos one by one."
+
+#: helpers.py:860
+msgid "Step 3: Create PDF"
+msgstr "Step 3: Create PDF"
+
+#: helpers.py:861
+msgid "If everything is ready, press here and create PDFs!"
+msgstr "If everything is ready, press here and create PDFs!"
+
+#: helpers.py:864 helpers.py:1885 helpers.py:2187
+msgid "Schedules"
+msgstr "Schedules"
+
+#: helpers.py:865
+msgid "Press here to add schedules."
+msgstr "Press here to add schedules."
+
+#: helpers.py:1006
+msgid "Unknown"
+msgstr "Unknown"
+
+#: helpers.py:1138 helpers.py:1307 helpers.py:1399
+msgid "Select Day"
+msgstr "Select Day"
+
+#: helpers.py:1157 helpers.py:1172
+msgid "Select Time"
+msgstr "Select Time"
+
+#: helpers.py:1212
+msgid "Select Course Color"
+msgstr "Select Course Color"
+
+#: helpers.py:1268
+msgid "Course Name"
+msgstr "Course Name"
+
+#: helpers.py:1335
+msgid "Start"
+msgstr "Start"
+
+#: helpers.py:1351
+msgid "End"
+msgstr "End"
+
+#: helpers.py:1369
+msgid "Update"
+msgstr "Update"
+
+#: helpers.py:1369
+msgid "Save"
+msgstr "Save"
+
+#: helpers.py:1375
+msgid "Edit Course"
+msgstr "Edit Course"
+
+#: helpers.py:1375
+msgid "Add Course"
+msgstr "Add Course"
+
+#: helpers.py:1400 helpers.py:1405
+msgid "Required!"
+msgstr "Required!"
+
+#: helpers.py:1419
+msgid "Invalid!"
+msgstr "Invalid!"
+
+#: helpers.py:1443
+msgid "Conflict with"
+msgstr "Conflict with"
+
+#: helpers.py:1495 helpers.py:1787
+msgid "Delete"
+msgstr "Delete"
+
+#: helpers.py:1499 helpers.py:1790
+msgid "Are you sure you want to delete"
+msgstr "Are you sure you want to delete"
+
+#: helpers.py:1503
+msgid "Delete Course?"
+msgstr "Delete Course?"
+
+#: helpers.py:1563
+msgid "Schedule Name"
+msgstr "Schedule Name"
+
+#: helpers.py:1566
+msgid "This name already exists!"
+msgstr "This name already exists!"
+
+#: helpers.py:1585
+msgid "Next"
+msgstr "Next"
+
+#: helpers.py:1589
+msgid "Creating a new schedule"
+msgstr "Creating a new schedule"
+
+#: helpers.py:1708
+msgid "Active"
+msgstr "Active"
+
+#: helpers.py:1709
+msgid "Tap to activate"
+msgstr "Tap to activate"
+
+#: helpers.py:1794
+msgid "Delete Schedule?"
+msgstr "Delete Schedule?"
+
+#: helpers.py:1879 helpers.py:2185
+msgid "LecturePDF"
+msgstr "LecturePDF"
+
+#: helpers.py:1891 helpers.py:2188
+msgid "Settings"
+msgstr "Settings"
+
+#: helpers.py:1922
+msgid "No active schedule found!"
+msgstr "No active schedule found!"
+
+#: helpers.py:1927
+msgid "Please select a semester start date!"
+msgstr "Please select a semester start date!"
+
+#: helpers.py:1933
+msgid "Invalid date format in settings!"
+msgstr "Invalid date format in settings!"
+
+#: helpers.py:1941
+msgid "Please select a folder or photos!"
+msgstr "Please select a folder or photos!"
+
+#: helpers.py:1958
+msgid "No files found to process!"
+msgstr "No files found to process!"
+
+#: helpers.py:1962
+msgid "Generating PDFs..."
+msgstr "Generating PDFs..."
+
+#: helpers.py:1965
+msgid "Please wait, analyzing photos and creating documents."
+msgstr "Please wait, analyzing photos and creating documents."
+
+#: helpers.py:2006
+msgid "No matching lectures found for these photos."
+msgstr "No matching lectures found for these photos."
+
+#: helpers.py:2012
+#, python-brace-format
+msgid "Success! {count} PDFs are created"
+msgstr "Success! {count} PDFs are created"
+
+#: helpers.py:2016
+msgid "No PDFs created (check dates/times)."
+msgstr "No PDFs created (check dates/times)."
+
+#: helpers.py:2023
+#, python-brace-format
+msgid "An unexpected error occurred: {error}"
+msgstr "An unexpected error occurred: {error}"
+
+#: helpers.py:2073 helpers.py:2151
+msgid "System"
+msgstr "System"
+
+#: helpers.py:2074 helpers.py:2144
+msgid "Light"
+msgstr "Light"
+
+#: helpers.py:2075 helpers.py:2147
+msgid "Dark"
+msgstr "Dark"
+
+#: helpers.py:2117
+msgid "Select Theme"
+msgstr "Select Theme"
+
+#: helpers.py:2162
+msgid "Monday"
+msgstr "Monday"
+
+#: helpers.py:2163
+msgid "Tuesday"
+msgstr "Tuesday"
+
+#: helpers.py:2164
+msgid "Wednesday"
+msgstr "Wednesday"
+
+#: helpers.py:2165
+msgid "Thursday"
+msgstr "Thursday"
+
+#: helpers.py:2166
+msgid "Friday"
+msgstr "Friday"
+
+#: helpers.py:2167
+msgid "Saturday"
+msgstr "Saturday"
+
+#: helpers.py:2168
+msgid "Sunday"
+msgstr "Sunday"
+
+#: helpers.py:2170
+msgid "Mon"
+msgstr "Mon"
+
+#: helpers.py:2171
+msgid "Tue"
+msgstr "Tue"
+
+#: helpers.py:2172
+msgid "Wed"
+msgstr "Wed"
+
+#: helpers.py:2173
+msgid "Thu"
+msgstr "Thu"
+
+#: helpers.py:2174
+msgid "Fri"
+msgstr "Fri"
+
+#: helpers.py:2175
+msgid "Sat"
+msgstr "Sat"
+
+#: helpers.py:2176
+msgid "Sun"
+msgstr "Sun"
+
+#: helpers.py:2178
+msgid "Select Semester Start Date"
+msgstr "Select Semester Start Date"
+
+#: helpers.py:2181
+msgid "GENERATE PDF"
+msgstr "GENERATE PDF"
+
+#: helpers.py:2182
+msgid "Theme"
+msgstr "Theme"
+
+#: helpers.py:2183
+msgid "Dynamic Color"
+msgstr "Dynamic Color"
+
+#: helpers.py:2184
+msgid "Use system color"
+msgstr "Use system color"
+
+#: helpers.py:2186
+msgid "Create PDFs"
+msgstr "Create PDFs"

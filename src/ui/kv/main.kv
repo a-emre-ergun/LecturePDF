@@ -1,0 +1,605 @@
+#:import dp kivy.metrics.dp
+#:import ScrollEffect kivy.effects.scroll.ScrollEffect
+#:import Clock kivy.clock.Clock
+#:import FitImage kivymd.uix.fitimage.FitImage
+
+<PDFHistoryCard>:
+    orientation: "vertical" if app.history_view_mode == "grid" else "horizontal"
+    size_hint_y: None
+    height: "340dp" if app.history_view_mode == "grid" else "150dp"
+    padding: "12dp"
+    spacing: "12dp"
+    radius: [12]
+    md_bg_color: app.theme_cls.surfaceVariantColor
+    ripple_behavior: True
+    on_release: app.open_pdf_file(self.filepath)
+
+    MDBoxLayout:
+        id: image_container
+        size_hint: (1, None) if app.history_view_mode == "grid" else (None, 1)
+        width: "100dp" if app.history_view_mode == "list" else self.width
+        height: "180dp" if app.history_view_mode == "grid" else self.height
+        md_bg_color: (0, 0, 0, 0.1)
+        radius: [8]
+        FitImage:
+            source: root.thumbnail if root.thumbnail else ""
+            opacity: 1 if root.thumbnail else 0
+            radius: [8]
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: "4dp"
+        pos_hint: {"center_y": .5}
+        MDLabel:
+            text: f"[s]{root.filename}[/s]" if root.is_missing else f"[b]{root.filename}[/b]"
+            markup: True
+            theme_font_size: "Custom"
+            font_size: "16sp"
+            adaptive_height: True
+            shorten: True
+            theme_text_color: "Custom"
+            text_color: [0.91, 0.05, 0.21, 1] if root.is_missing else app.theme_cls.onSurfaceColor
+        MDLabel:
+            text: root.course
+            theme_font_size: "Custom"
+            font_size: "13sp"
+            adaptive_height: True
+            theme_text_color: "Secondary"
+        MDLabel:
+            text: root.schedule
+            theme_font_size: "Custom"
+            font_size: "13sp"
+            adaptive_height: True
+            theme_text_color: "Secondary"
+        MDLabel:
+            text: root.week
+            theme_font_size: "Custom"
+            font_size: "13sp"
+            adaptive_height: True
+            theme_text_color: "Secondary"
+        Widget:
+        MDLabel:
+            text: app.tr._("File missing!") if root.is_missing else root.date
+            theme_font_size: "Custom"
+            font_size: "11sp"
+            adaptive_height: True
+            theme_text_color: "Custom"
+            text_color: [0.91, 0.05, 0.21, 1] if root.is_missing else app.theme_cls.onSurfaceColor
+
+<BaseMDNavigationItem>:
+    ripple_scale: 0
+    
+    MDNavigationItemIcon:
+        icon: root.icon
+    
+    MDNavigationItemLabel:
+        text: root.text
+
+<CreatePDFsScreen>:
+    MDFloatLayout:
+        md_bg_color: app.theme_cls.surfaceColor
+        MDBoxLayout:
+            orientation: "vertical"
+            adaptive_height: True
+            spacing: "20dp"
+            padding: "20dp"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            
+            MDButton:
+                id: btn_date_step
+                style: "outlined"
+                theme_width: "Custom"
+                size_hint_x: 1
+                height: "56dp"
+                on_release: root.show_date_picker()
+                
+                MDButtonIcon:
+                    icon: "calendar-start"
+                
+                MDButtonText:
+                    id: btn_date_text
+                    text: app.tr._("Select Semester Start Date")
+                    pos_hint: {"center_y": .5}
+
+            MDFloatLayout:
+                size_hint_x: 1
+                size_hint_y: None
+                height: "64dp"
+
+                MDButton:
+                    id: btn_folder_step
+                    style: "tonal"
+                    theme_width: "Custom"
+                    theme_shadow_color: "Custom"
+                    shadow_color: (0,0,0,0)
+                    size_hint_x: 1
+                    height: "64dp"
+                    ripple_duration_in_slow: 0.6
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    on_release: root.open_file_manager("folder")
+                    
+                    MDButtonIcon:
+                        icon: "folder-outline"
+                    
+                    MDButtonText:
+                        id: btn_folder_text
+                        text: app.tr._("Select Input Folder")
+
+                MDIconButton:
+                    id: btn_clear_folder
+                    icon: "close-circle-outline"
+                    style: "standard"
+                    theme_icon_color: "Custom"
+                    icon_color: app.theme_cls.onSurfaceVariantColor
+                    pos_hint: {"right": .98, "center_y": .5}
+                    opacity: 0
+                    disabled: True
+                    on_release: root.clear_selection("folder")
+
+            MDFloatLayout:
+                size_hint_x: 1
+                size_hint_y: None
+                height: "64dp"
+
+                MDButton:
+                    id: btn_photo_step
+                    style: "tonal"
+                    theme_width: "Custom"
+                    theme_shadow_color: "Custom"
+                    shadow_color: (0,0,0,0)
+                    size_hint_x: 1
+                    height: "64dp"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    ripple_duration_in_slow: 0.6
+                    on_release: root.open_file_manager("image")
+                    
+                    MDButtonIcon:
+                        icon: "image-multiple-outline"
+                    
+                    MDButtonText:
+                        id: btn_photo_text
+                        text: app.tr._("Select Photos")
+                
+                MDIconButton:
+                    id: btn_clear_photos
+                    icon: "close-circle-outline"
+                    style: "standard"
+                    theme_icon_color: "Custom"
+                    icon_color: app.theme_cls.onSurfaceVariantColor
+                    pos_hint: {"right": .98, "center_y": .5}
+                    opacity: 0
+                    disabled: True
+                    on_release: root.clear_selection("image")
+
+            MDButton:
+                id: btn_generate_step
+                style: "filled"
+                theme_shadow_color: "Custom"
+                shadow_color: (0,0,0,0)
+                theme_width: "Custom"
+                size_hint_x: 1
+                height: "56dp"
+                on_release: app.generate_pdfs()
+                
+                MDButtonIcon:
+                    icon: "check"
+                
+                MDButtonText:
+                    text: app.tr._("GENERATE PDF")
+                    pos_hint: {"center_y": .5}
+
+<ScheduleScreen>:
+    MDFloatLayout:
+        ScrollView:
+            effect_cls: "ScrollEffect"
+            scroll_type: ["bars"]
+            bar_width: dp(4)
+            scroll_wheel_distance: dp(60)
+            pos_hint: {"top": 1}
+            MDBoxLayout:
+                id: schedule_list
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "10dp"
+                spacing: "12dp"
+
+<SettingsScreen>:
+    MDFloatLayout:
+        md_bg_color: app.theme_cls.surfaceColor
+        
+        MDBoxLayout:
+            orientation: "vertical"
+
+            ScrollView:
+                effect_cls: "ScrollEffect"
+                scroll_type: ["bars"]
+                bar_width: dp(4)
+                scroll_wheel_distance: dp(60)
+                MDList:
+                    id: settings_list
+                    
+                    MDListItem:
+                        type: "small"
+                        size_hint_y: None
+                        height: "72dp"
+                        ripple_effect: False
+                        
+                        MDListItemLeadingIcon:
+                            icon: "theme-light-dark"
+                            theme_icon_color: "Custom"
+                            icon_color: app.theme_cls.primaryColor
+                        
+                        MDListItemHeadlineText:
+                            text: app.tr._("Theme")
+
+                        MDBoxLayout:
+                            adaptive_size: True
+                            pos_hint: {"center_y": .5}
+
+                            MDButton:
+                                id: theme_dropdown_btn
+                                style: "tonal"
+                                theme_bg_color: "Custom"
+                                md_bg_color: app.theme_cls.surfaceVariantColor
+                                theme_width: "Custom"
+                                size_hint_x: None
+                                width: "150dp"
+                                radius: [6, 6, 6, 6]
+                                on_release: app.open_theme_menu(self)
+
+                                MDButtonText:
+                                    text: app.tr._(app.current_theme_name)
+                                    theme_font_size: "Custom"
+                                    font_size: "15sp"
+                                    pos_hint: {"center_x": .45, "center_y": .5}
+
+                                MDButtonIcon:
+                                    icon: "menu-down"
+                                    pos_hint: {"right": .95, "center_y": .5}
+
+                    MDListItem:
+                        type: "small"
+                        size_hint_y: None
+                        height: "72dp"
+                        divider: True
+                        ripple_effect: False
+
+                        MDListItemLeadingIcon:
+                            icon: "palette"
+                            theme_icon_color: "Custom"
+                            icon_color: app.theme_cls.primaryColor
+
+                        MDListItemHeadlineText:
+                            text: app.tr._("Color Palette")
+
+                        MDListItemSupportingText:
+                            text: app.tr._(app.current_palette_name)
+
+                        MDBoxLayout:
+                            adaptive_size: True
+                            pos_hint: {"center_y": .5}
+
+                            MDButton:
+                                id: palette_dropdown_btn
+                                style: "tonal"
+                                theme_bg_color: "Custom"
+                                md_bg_color: app.theme_cls.surfaceVariantColor
+                                theme_width: "Custom"
+                                size_hint_x: None
+                                width: "150dp"
+                                radius: [6, 6, 6, 6]
+                                on_release: app.open_palette_menu(self)
+
+                                MDButtonText:
+                                    text: app.tr._(app.current_palette_name)
+                                    theme_font_size: "Custom"
+                                    font_size: "15sp"
+                                    pos_hint: {"center_x": .45, "center_y": .5}
+
+                                MDButtonIcon:
+                                    icon: "menu-down"
+                                    pos_hint: {"right": .95, "center_y": .5}
+
+                    MDListItem:
+                        type: "small"
+                        size_hint_y: None
+                        height: "72dp"
+                        divider: True
+                        on_release: app.open_language_screen()
+
+                        MDListItemLeadingIcon:
+                            icon: "translate"
+                            theme_icon_color: "Custom"
+                            icon_color: app.theme_cls.primaryColor
+
+                        MDListItemHeadlineText:
+                            text: app.tr._("Language")
+
+                        MDListItemSupportingText:
+                            text: app.current_language_name
+
+                    MDListItem:
+                        type: "small"
+                        size_hint_y: None
+                        height: "72dp"
+                        divider: True
+                        ripple_duration_in_slow: 0.6
+                        on_release: root.select_output_folder()
+
+                        MDListItemLeadingIcon:
+                            icon: "folder-upload-outline"
+                            theme_icon_color: "Custom"
+                            icon_color: app.theme_cls.primaryColor
+
+                        MDListItemHeadlineText:
+                            text: app.tr._("Select Output Folder")
+
+                        MDListItemSupportingText:
+                            text: app.custom_output_path if app.custom_output_path else app.tr._("Default (Downloads)")
+
+                    MDListItem:
+                        type: "small"
+                        size_hint_y: None
+                        height: "72dp"
+                        on_release: Clock.schedule_once(app.start_tutorial, 1)
+
+                        MDListItemLeadingIcon:
+                            icon: "help-circle-outline"
+                            theme_icon_color: "Custom"
+                            icon_color: app.theme_cls.primaryColor
+
+                        MDListItemHeadlineText:
+                            text: app.tr._("Show Tutorial")
+
+                        MDListItemSupportingText:
+                            text: app.tr._("Show Initial Tutorial")
+
+                            
+
+<ScheduleDetailScreen>:
+    MDFloatLayout:
+        md_bg_color: app.theme_cls.surfaceColor
+
+        ScrollView:
+            effect_cls: "ScrollEffect"
+            scroll_type: ["bars"]
+            bar_width: dp(4)
+            scroll_wheel_distance: dp(80)
+            pos_hint: {"top": .9, "bottom": 0}
+            MDBoxLayout:
+                id: detail_content
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "10dp", "10dp", "10dp", "140dp"
+                spacing: "12dp"
+        
+        MDTopAppBar:
+            type: "small"
+            size_hint_y: None
+            height: "64dp"
+            pos_hint: {"center_x": 0.5, "center_y": 0.95}
+            
+            MDTopAppBarLeadingButtonContainer:
+                MDActionTopAppBarButton:
+                    icon: "arrow-left"
+                    on_release: app.go_back_to_schedules()
+            
+            MDTopAppBarTitle:
+                text: root.schedule_name
+
+    MDFabButton:
+        icon: "plus"
+        style: "standard"
+        theme_bg_color: "Custom"
+        md_bg_color: app.theme_cls.primaryColor
+        theme_icon_color: "Custom"
+        icon_color: app.theme_cls.onPrimaryColor
+        pos_hint: {"right": .95, "y": .05}
+        on_release: app.show_add_course_dialog()
+        
+MDFloatLayout:
+    MDBoxLayout:
+        orientation: "vertical"
+        md_bg_color: app.theme_cls.surfaceColor
+
+        MDTopAppBar:
+            id: global_app_bar
+            pos_hint: {"center_x": .5, "center_y": .95} 
+            MDTopAppBarTitle:
+                id: top_app_bar_title
+                text: app.tr._("LecturePDF")
+                
+            MDTopAppBarTrailingButtonContainer:
+                id: history_btn_container
+                MDActionTopAppBarButton:
+                    id: history_btn
+                    icon: "history"
+                    on_release: app.open_history_screen()
+        
+        MDScreenManager:
+            id: screen_manager
+            
+            CreatePDFsScreen:
+                name: "Create PDFs"
+            
+            ScheduleScreen:
+                name: "Schedules"
+            
+            SettingsScreen:
+                name: "Settings"
+            
+            ScheduleDetailScreen:
+                name: "ScheduleDetail"
+
+            HistoryScreen:
+                name: "HistoryScreen"
+
+            LanguageScreen:
+                name: "LanguageScreen"
+        
+        MDNavigationBar:
+            id: nav_bar
+            on_switch_tabs: app.on_switch_tabs(*args)
+            
+            BaseMDNavigationItem:
+                id: nav_item_create
+                icon: "file-document"
+                text: app.tr._("Create PDFs")
+                active: True
+            
+            BaseMDNavigationItem:
+                id: nav_item_schedules
+                icon: "calendar-month"
+                text: app.tr._("Schedules")
+            
+            BaseMDNavigationItem:
+                id: nav_item_settings
+                icon: "cog"
+                text: app.tr._("Settings")
+    
+    MDFabButton:
+        id: fab
+        icon: "plus"
+        style: "standard"
+        theme_bg_color: "Custom"
+        md_bg_color: app.theme_cls.primaryColor
+        theme_icon_color: "Custom"
+        icon_color: app.theme_cls.onPrimaryColor
+        pos_hint: {"right": .95, "y": .15}
+        opacity: 0
+        disabled: True
+        on_release: app.on_fab_press()
+
+<HistoryScreen>:
+    MDFloatLayout:
+        md_bg_color: app.theme_cls.surfaceColor
+
+        RecycleView:
+            id: rv
+            viewclass: "PDFHistoryCard"
+            size_hint_y: None
+            height: root.height - dp(134)
+            scroll_wheel_distance: dp(150)
+            effect_cls: "ScrollEffect"
+            scroll_type: ["bars"]
+            bar_width: dp(4)
+            RecycleGridLayout:
+                id: rv_layout
+                cols: 2 if app.history_view_mode == "grid" else 1
+                default_size: None, dp(340) if app.history_view_mode == "grid" else dp(150)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                padding: ["16dp", "16dp", "16dp", "100dp"]
+                spacing: "16dp"
+            
+                MDGridLayout:
+                    id: history_grid
+                    cols: 1
+                    adaptive_height: True
+                    padding: ["16dp", "16dp", "16dp", "100dp"]
+                    spacing: "16dp"
+
+        Widget:
+            size_hint: (1, None)
+            height: dp(134)
+            pos_hint: {"top": 1}
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.surfaceColor
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint: (1, None)
+            height: dp(134)
+            pos_hint: {"top": 1}
+
+            MDTopAppBar:
+                id: top_bar
+                type: "small"
+                size_hint_y: None
+                height: "64dp"
+                
+                MDTopAppBarLeadingButtonContainer:
+                    MDActionTopAppBarButton:
+                        icon: "arrow-left"
+                        on_release: app.go_back_from_history()
+                
+                MDTopAppBarTitle:
+                    text: app.tr._("PDF History")
+                    
+                MDTopAppBarTrailingButtonContainer:
+                    MDActionTopAppBarButton:
+                        id: view_toggle_btn
+                        icon: "view-grid"
+                        on_release: app.toggle_history_view()
+
+            MDFloatLayout:
+                size_hint_y: None
+                height: "70dp"
+
+                MDBoxLayout:
+                    size_hint_x: 0.75
+                    size_hint_y: None
+                    height: "50dp"
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    md_bg_color: app.theme_cls.surfaceVariantColor
+                    radius: [self.height / 2]
+                    padding: ["8dp", "0dp", "16dp", "0dp"]
+                    spacing: "4dp"
+                    
+                    MDIconButton:
+                        icon: "magnify"
+                        style: "standard"
+                        theme_icon_color: "Custom"
+                        icon_color: app.theme_cls.onSurfaceVariantColor
+                        ripple_effect: False
+                        pos_hint: {"center_y": .5}
+                        
+                    TextInput:
+                        id: search_field
+                        hint_text: app.tr._("Search by file name...")
+                        background_color: 0, 0, 0, 0
+                        background_normal: ""
+                        background_active: ""
+                        foreground_color: app.theme_cls.onSurfaceColor
+                        hint_text_color: app.theme_cls.onSurfaceVariantColor
+                        cursor_color: app.theme_cls.primaryColor
+                        multiline: False
+                        font_size: "16sp"
+                        size_hint_y: None
+                        height: self.minimum_height
+                        pos_hint: {"center_y": .5}
+                        on_text: app.on_search_text(self.text)
+
+                #MDIconButton:
+                #    icon: "tune"
+                #    pos_hint: {"right": 0.95, "center_y": 0.5}
+
+<LanguageScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        md_bg_color: app.theme_cls.surfaceColor
+
+        MDTopAppBar:
+            type: "small"
+            size_hint_y: None
+            height: "64dp"
+            
+            MDTopAppBarLeadingButtonContainer:
+                MDActionTopAppBarButton:
+                    icon: "arrow-left"
+                    on_release: app.go_back_to_settings()
+            
+            MDTopAppBarTitle:
+                text: app.tr._("Language")
+
+        ScrollView:
+            effect_cls: "ScrollEffect"
+            MDList:
+                id: language_list
+                padding: "16dp"
+                spacing: "8dp"
