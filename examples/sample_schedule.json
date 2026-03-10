@@ -1,0 +1,72 @@
+{
+    "Course Name 1": [
+        {
+            "day": 1,
+            "start_time": "13:30",
+            "end_time": "15:30"
+        },
+        {
+            "day": 4,
+            "start_time": "08:30",
+            "end_time": "10:30"
+        }
+    ],
+    "Course Name 2": [
+        {
+            "day": 0,
+            "start_time": "08:30",
+            "end_time": "10:30"
+        },
+        {
+            "day": 2,
+            "start_time": "13:30",
+            "end_time": "15:30"
+        },
+        {
+            "day": 3,
+            "start_time": "08:30",
+            "end_time": "10:30"
+        }
+    ],
+    "Course Name 3": [
+        {
+            "day": 1,
+            "start_time": "08:30",
+            "end_time": "10:30"
+        },
+        {
+            "day": 3,
+            "start_time": "13:30",
+            "end_time": "15:30"
+        }
+    ],
+    "Course Name 4": [
+        {
+            "day": 1,
+            "start_time": "15:30",
+            "end_time": "20:30"
+        },
+        {
+            "day": 4,
+            "start_time": "10:30",
+            "end_time": "12:30"
+        }
+    ],
+    "Course Name 5": [
+        {
+            "day": 0,
+            "start_time": "10:30",
+            "end_time": "12:30"
+        },
+        {
+            "day": 2,
+            "start_time": "15:30",
+            "end_time": "17:30"
+        },
+        {
+            "day": 4,
+            "start_time": "15:30",
+            "end_time": "17:30"
+        }
+    ]
+}
