@@ -1,7 +1,8 @@
 #:import dp kivy.metrics.dp
-#:import ScrollEffect kivy.effects.scroll.ScrollEffect
 #:import Clock kivy.clock.Clock
 #:import FitImage kivymd.uix.fitimage.FitImage
+#:import PlatformScrollView src.ui.components.platform_scroll.PlatformScrollView
+#:import PlatformRecycleView src.ui.components.platform_scroll.PlatformRecycleView
 
 <PDFHistoryCard>:
     orientation: "vertical" if app.history_view_mode == "grid" else "horizontal"
@@ -190,10 +191,7 @@
 
 <ScheduleScreen>:
     MDFloatLayout:
-        ScrollView:
-            effect_cls: "ScrollEffect"
-            scroll_type: ["bars"]
-            bar_width: dp(4)
+        PlatformScrollView:
             scroll_wheel_distance: dp(60)
             pos_hint: {"top": 1}
             MDBoxLayout:
@@ -210,10 +208,7 @@
         MDBoxLayout:
             orientation: "vertical"
 
-            ScrollView:
-                effect_cls: "ScrollEffect"
-                scroll_type: ["bars"]
-                bar_width: dp(4)
+            PlatformScrollView:
                 scroll_wheel_distance: dp(60)
                 MDList:
                     id: settings_list
@@ -288,6 +283,8 @@
                                 size_hint_x: None
                                 width: "150dp"
                                 radius: [6, 6, 6, 6]
+                                disabled: app.dynamic_color_enabled
+                                opacity: 0.5 if app.dynamic_color_enabled else 1
                                 on_release: app.open_palette_menu(self)
 
                                 MDButtonText:
@@ -299,6 +296,35 @@
                                 MDButtonIcon:
                                     icon: "menu-down"
                                     pos_hint: {"right": .95, "center_y": .5}
+
+                    MDListItem:
+                        type: "small"
+                        size_hint_y: None
+                        height: "72dp" if app.is_android_platform else "0dp"
+                        opacity: 1 if app.is_android_platform else 0
+                        disabled: not app.is_android_platform
+                        divider: True
+                        ripple_effect: False
+
+                        MDListItemLeadingIcon:
+                            icon: "palette-swatch"
+                            theme_icon_color: "Custom"
+                            icon_color: app.theme_cls.primaryColor
+
+                        MDListItemHeadlineText:
+                            text: app.tr._("Dynamic Color")
+
+                        MDListItemSupportingText:
+                            text: app.tr._("Use system color")
+
+                        MDBoxLayout:
+                            adaptive_size: True
+                            pos_hint: {"center_y": .5}
+
+                            MDSwitch:
+                                id: dynamic_color_switch
+                                active: app.dynamic_color_enabled
+                                on_active: app.toggle_dynamic_color(self.active)
 
                     MDListItem:
                         type: "small"
@@ -337,6 +363,37 @@
                         MDListItemSupportingText:
                             text: app.custom_output_path if app.custom_output_path else app.tr._("Default (Downloads)")
 
+                        MDBoxLayout:
+                            adaptive_size: True
+                            pos_hint: {"center_y": .5}
+
+                            MDIconButton:
+                                icon: "restore"
+                                style: "standard"
+                                theme_icon_color: "Custom"
+                                icon_color: app.theme_cls.primaryColor
+                                opacity: 1 if app.custom_output_path else 0
+                                disabled: not bool(app.custom_output_path)
+                                on_release: root.reset_output_folder()
+
+                    MDListItem:
+                        type: "small"
+                        size_hint_y: None
+                        height: "72dp"
+                        divider: True
+                        on_release: app.open_naming_format_screen()
+
+                        MDListItemLeadingIcon:
+                            icon: "file-document-edit-outline"
+                            theme_icon_color: "Custom"
+                            icon_color: app.theme_cls.primaryColor
+
+                        MDListItemHeadlineText:
+                            text: app.tr._("PDF Naming Format")
+
+                        MDListItemSupportingText:
+                            text: app.current_naming_format_name
+
                     MDListItem:
                         type: "small"
                         size_hint_y: None
@@ -360,10 +417,7 @@
     MDFloatLayout:
         md_bg_color: app.theme_cls.surfaceColor
 
-        ScrollView:
-            effect_cls: "ScrollEffect"
-            scroll_type: ["bars"]
-            bar_width: dp(4)
+        PlatformScrollView:
             scroll_wheel_distance: dp(80)
             pos_hint: {"top": .9, "bottom": 0}
             MDBoxLayout:
@@ -436,6 +490,9 @@ MDFloatLayout:
 
             LanguageScreen:
                 name: "LanguageScreen"
+
+            NamingFormatScreen:
+                name: "NamingFormatScreen"
         
         MDNavigationBar:
             id: nav_bar
@@ -474,15 +531,12 @@ MDFloatLayout:
     MDFloatLayout:
         md_bg_color: app.theme_cls.surfaceColor
 
-        RecycleView:
+        PlatformRecycleView:
             id: rv
             viewclass: "PDFHistoryCard"
             size_hint_y: None
             height: root.height - dp(134)
             scroll_wheel_distance: dp(150)
-            effect_cls: "ScrollEffect"
-            scroll_type: ["bars"]
-            bar_width: dp(4)
             RecycleGridLayout:
                 id: rv_layout
                 cols: 2 if app.history_view_mode == "grid" else 1
@@ -597,9 +651,42 @@ MDFloatLayout:
             MDTopAppBarTitle:
                 text: app.tr._("Language")
 
-        ScrollView:
-            effect_cls: "ScrollEffect"
+        PlatformScrollView:
             MDList:
                 id: language_list
                 padding: "16dp"
                 spacing: "8dp"
+
+<NamingFormatScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        md_bg_color: app.theme_cls.surfaceColor
+
+        MDTopAppBar:
+            type: "small"
+            size_hint_y: None
+            height: "64dp"
+
+            MDTopAppBarLeadingButtonContainer:
+                MDActionTopAppBarButton:
+                    icon: "arrow-left"
+                    on_release: app.go_back_to_settings()
+
+            MDTopAppBarTitle:
+                text: app.tr._("PDF Naming Format")
+
+        PlatformScrollView:
+            MDList:
+                id: naming_format_list
+                padding: "16dp"
+                spacing: "8dp"
+
+    MDFabButton:
+        icon: "plus"
+        style: "standard"
+        theme_bg_color: "Custom"
+        md_bg_color: app.theme_cls.primaryColor
+        theme_icon_color: "Custom"
+        icon_color: app.theme_cls.onPrimaryColor
+        pos_hint: {"right": .95, "y": .05}
+        on_release: app.show_add_naming_format_dialog()

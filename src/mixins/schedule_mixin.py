@@ -2,6 +2,7 @@ import json
 import os
 import re
 
+from kivy.clock import Clock
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.widget import Widget
 from kivy.graphics import Color, RoundedRectangle
@@ -288,31 +289,39 @@ class ScheduleMixin:
 
         self.load_courses_to_ui(filename)
 
-        sm.current = "ScheduleDetail"
-
         gb = self.root.ids.global_app_bar
+        gb.height = 0
+        gb.size_hint_y = 0
         gb.opacity = 0
         gb.disabled = True
-        gb.height = 0
 
         nb = self.root.ids.nav_bar
+        nb.height = 0
+        nb.size_hint_y = 0
         nb.opacity = 0
         nb.disabled = True
-        nb.height = 0
 
         self.toggle_fab(False)
 
+        Clock.schedule_once(lambda dt: setattr(sm, "current", "ScheduleDetail"), 0)
+
     def go_back_to_schedules(self):
-        self.root.ids.screen_manager.current = "Schedules"
+        sm = self.root.ids.screen_manager
+        current_screen = sm.get_screen(sm.current)
+        current_screen.opacity = 0
 
         gb = self.root.ids.global_app_bar
+        gb.size_hint_y = None
+        gb.height = "64dp"
         gb.opacity = 1
         gb.disabled = False
-        gb.height = "64dp"
 
         nb = self.root.ids.nav_bar
+        nb.size_hint_y = None
+        nb.height = "80dp"
         nb.opacity = 1
         nb.disabled = False
-        nb.height = "80dp"
 
         self.toggle_fab(True)
+
+        Clock.schedule_once(lambda dt: setattr(sm, "current", "Schedules"), 0)

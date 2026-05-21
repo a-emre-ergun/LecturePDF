@@ -128,7 +128,7 @@ class LecturePDF:
 
         return photos_by_week_and_lecture
 
-    def create_pdfs(self, photos_by_week_and_lecture, output_folder, db=None, schedule_name=""):
+    def create_pdfs(self, photos_by_week_and_lecture, output_folder, db=None, schedule_name="", naming_format="week{week:02d}_{course}"):
         os.makedirs(output_folder, exist_ok=True)
         created_files = []
 
@@ -161,7 +161,15 @@ class LecturePDF:
                         continue
 
                 course_name = course.replace(" ", "_").lower()
-                filename = f"week{week:02d}_{course_name}.pdf"
+                schedule = schedule_name.replace(" ", "_").lower()
+                num_photos = len(photo_paths)
+                try:
+                    filename = naming_format.format(
+                        week=week, course=course_name,
+                        schedule=schedule,
+                        num_photos=num_photos) + ".pdf"
+                except (KeyError, ValueError, IndexError):
+                    filename = f"week{week:02d}_{course_name}.pdf"
                 pdf_output_path = os.path.join(output_folder, filename)
 
                 try:

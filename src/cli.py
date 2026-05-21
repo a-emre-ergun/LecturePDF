@@ -4,10 +4,11 @@ import sys
 from datetime import datetime
 
 from src.core.pdf_engine import LecturePDF
+from src.utils.platform import PLATFORM
 
 
 def main():
-    if len(sys.argv) == 1 and os.name == "nt" and getattr(sys, "frozen", False):
+    if len(sys.argv) == 1 and PLATFORM == "win32" and getattr(sys, "frozen", False):
         import msvcrt
         print("This program must be run from a command line. Do not double-click the executable.")
         print("Usage: lecturepdf --semester-start YYYY-MM-DD [OPTIONS]")

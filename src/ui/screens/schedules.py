@@ -1,3 +1,4 @@
+from kivy.clock import Clock
 from kivy.properties import StringProperty
 
 from kivymd.app import MDApp
@@ -12,3 +13,9 @@ class ScheduleScreen(MDScreen):
 class ScheduleDetailScreen(MDScreen):
     schedule_name = StringProperty("Schedule Details")
     schedule_filename = StringProperty("")
+
+    def on_pre_enter(self):
+        self.opacity = 0
+
+    def on_enter(self):
+        Clock.schedule_once(lambda dt: setattr(self, "opacity", 1), 0)

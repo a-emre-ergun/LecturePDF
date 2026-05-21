@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2026-03-08 23:49+0300\n"
+"POT-Creation-Date: 2026-03-22 23:47+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -11,594 +11,667 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.8\n"
 "X-Poedit-KeywordsList: _;app._\n"
-"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-Basepath: ../../../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: main.py:201 test.py:201
-msgid "Photo date must be after semester start"
-msgstr "Fotoğraf tarihi dönem başından önce"
+#: src/app.py:221 src/app.py:588 src/mixins/theme_mixin.py:160
+#: src/mixins/theme_mixin.py:163 src/mixins/theme_mixin.py:200
+msgid "System Language"
+msgstr "Sistem Dili"
 
-#: main.py:402 test.py:402
-msgid "Click anywhere to continue..."
-msgstr "Devam etmek için herhangi bir yere tıkla..."
-
-#: main.py:434 test.py:434
-msgid "Select date"
-msgstr "Tarih seç"
-
-#: main.py:435 main.py:470 main.py:1721 main.py:1734 main.py:3080 test.py:435
-#: test.py:470 test.py:1721 test.py:1734 test.py:3090
-msgid "Ok"
-msgstr "Tamam"
-
-#: main.py:436 main.py:471 main.py:1722 main.py:1735 main.py:1988 main.py:2110
-#: main.py:2202 main.py:2394 main.py:2843 main.py:3081 test.py:436 test.py:471
-#: test.py:1722 test.py:1735 test.py:1998 test.py:2120 test.py:2212
-#: test.py:2404 test.py:2853 test.py:3091
-msgid "Cancel"
-msgstr "İptal"
-
-#: main.py:454 main.py:2961 test.py:454 test.py:2971
-msgid "Start Date"
-msgstr "Başlangıç Tarihi"
-
-#: main.py:469 test.py:469
-msgid "Enter date"
-msgstr "Tarih gir"
-
-#: main.py:472 test.py:472
-msgid "Invalid date format"
-msgstr "Geçersiz tarih formatı"
-
-#: main.py:494 main.py:1356 test.py:494 test.py:1356
+#: src/app.py:254 src/ui/screens/create_pdfs.py:78
 msgid "Photos already selected! Clear them first."
 msgstr "Fotoğraflar seçili! Önce onu temizle."
 
-#: main.py:498 test.py:498
-msgid "Select Folder"
-msgstr "Klasör Seç"
-
-#: main.py:508 main.py:1370 test.py:508 test.py:1370
+#: src/app.py:268 src/ui/screens/create_pdfs.py:89
 msgid "Folder already selected! Clear it first."
 msgstr "Klasör seçili! Önce onu temizle."
 
-#: main.py:513 main.py:538 main.py:3049 test.py:513 test.py:538 test.py:3059
-msgid "Select Photos"
-msgstr "Fotoğraf Seç"
-
-#: main.py:521 main.py:1379 main.py:2970 test.py:521 test.py:1379 test.py:2980
+#: src/app.py:277 src/app.py:513 src/ui/screens/create_pdfs.py:118
 msgid "Photos Selected"
 msgstr "Fotoğraf Seçildi"
 
-#: main.py:532 main.py:3048 test.py:532 test.py:3058
-msgid "Select Input Folder"
-msgstr "Klasör Seç"
-
-#: main.py:581 test.py:581
-msgid "Select Output Folder"
-msgstr "Klasör Seç"
-
-#: main.py:1388 main.py:2491 main.py:3054 test.py:1388 test.py:2501
-#: test.py:3064
+#: src/app.py:333 src/app.py:348 src/app.py:457 src/app.py:589
 msgid "LecturePDF"
 msgstr "LecturePDF"
 
-#: main.py:1402 test.py:1402
+#: src/app.py:362 src/app.py:392
 msgid "Step 1: Select Date"
 msgstr "Adım 1: Tarih Seç"
 
-#: main.py:1403 test.py:1403
+#: src/app.py:363 src/app.py:393
 msgid "Select semester start date from here."
 msgstr "Buradan dönem başlangıç tarihi seç."
 
-#: main.py:1406 test.py:1406
+#: src/app.py:366 src/app.py:396
 msgid "Step 2: Select Folder"
 msgstr "Adım 2: Klasör Seç"
 
-#: main.py:1407 test.py:1407
+#: src/app.py:367 src/app.py:397
 msgid "Select a folder where your photos are..."
 msgstr "Fotoğraflarının olduğu klasörü seç..."
 
-#: main.py:1410 test.py:1410
+#: src/app.py:370 src/app.py:400
 msgid "...Or Photos"
 msgstr "...Veya Fotoğraflar"
 
-#: main.py:1411 test.py:1411
+#: src/app.py:371 src/app.py:401
 msgid "...Or select photos one by one."
 msgstr "...Veya fotoğrafları teker teker seç."
 
-#: main.py:1414 test.py:1414
+#: src/app.py:374 src/app.py:404
 msgid "Step 3: Create PDF"
 msgstr "Adım 3: PDF oluşturma"
 
-#: main.py:1415 test.py:1415
+#: src/app.py:375
 msgid "If everything is ready, click here and create PDFs!"
 msgstr "Eğer her şey hazırsa buraya tıkla ve PDF oluştur!"
 
-#: main.py:1418 test.py:1418
+#: src/app.py:378 src/app.py:408
 msgid "PDF History"
 msgstr "PDF Geçmişi"
 
-#: main.py:1419 test.py:1419
+#: src/app.py:379
 msgid "Click here to view your previously generated PDFs."
 msgstr "Buraya tıklayarak önceden oluşturduğun PDFleri gör."
 
-#: main.py:1422 main.py:2499 main.py:3056 test.py:1422 test.py:2509
-#: test.py:3066
+#: src/app.py:382 src/app.py:412 src/app.py:465 src/app.py:591
 msgid "Schedules"
 msgstr "Programlar"
 
-#: main.py:1423 test.py:1423
+#: src/app.py:383
 msgid "Click here to add schedules."
 msgstr "Program eklemek için buraya tıkla."
 
-#: main.py:1426 main.py:2507 main.py:3023 main.py:3057 test.py:1426
-#: test.py:2517 test.py:3033 test.py:3067
+#: src/app.py:386 src/app.py:416 src/app.py:473 src/app.py:592
+#: src/mixins/theme_mixin.py:207
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: main.py:1427 test.py:1427
+#: src/app.py:387
 msgid "Click here to change output folder."
 msgstr "Hedef klasörü değiştirmek için buraya tıkla."
 
-#: main.py:1571 test.py:1571
+#: src/app.py:405
+msgid "If everything is ready, tap here and create PDFs!"
+msgstr "Eğer her şey hazırsa buraya bas ve PDF oluştur!"
+
+#: src/app.py:409
+msgid "Tap here to view your previously generated PDFs."
+msgstr "Buraya basarak önceden oluşturduğun PDFleri gör."
+
+#: src/app.py:413
+msgid "Tap here to add schedules."
+msgstr "Program eklemek için buraya bas."
+
+#: src/app.py:417
+msgid "Tap here to change output folder."
+msgstr "Hedef klasörü değiştirmek için buraya bas."
+
+#: src/app.py:504 src/ui/screens/create_pdfs.py:42
+msgid "Start Date"
+msgstr "Başlangıç Tarihi"
+
+#: src/app.py:565
+msgid "Monday"
+msgstr "Pazartesi"
+
+#: src/app.py:566
+msgid "Tuesday"
+msgstr "Salı"
+
+#: src/app.py:567
+msgid "Wednesday"
+msgstr "Çarşamba"
+
+#: src/app.py:568
+msgid "Thursday"
+msgstr "Perşembe"
+
+#: src/app.py:569
+msgid "Friday"
+msgstr "Cuma"
+
+#: src/app.py:570
+msgid "Saturday"
+msgstr "Cumartesi"
+
+#: src/app.py:571
+msgid "Sunday"
+msgstr "Pazar"
+
+#: src/app.py:573
+msgid "Mon"
+msgstr "Pzt"
+
+#: src/app.py:574
+msgid "Tue"
+msgstr "Sal"
+
+#: src/app.py:575
+msgid "Wed"
+msgstr "Çar"
+
+#: src/app.py:576
+msgid "Thu"
+msgstr "Per"
+
+#: src/app.py:577
+msgid "Fri"
+msgstr "Cum"
+
+#: src/app.py:578
+msgid "Sat"
+msgstr "Cmt"
+
+#: src/app.py:579
+msgid "Sun"
+msgstr "Pzr"
+
+#: src/app.py:581
+msgid "Select Semester Start Date"
+msgstr "Dönem Başlangıç Tarihi Seç"
+
+#: src/app.py:582 src/ui/screens/create_pdfs.py:127
+msgid "Select Input Folder"
+msgstr "Klasör Seç"
+
+#: src/app.py:583 src/ui/screens/create_pdfs.py:94
+#: src/ui/screens/create_pdfs.py:133
+msgid "Select Photos"
+msgstr "Fotoğraf Seç"
+
+#: src/app.py:584
+msgid "GENERATE PDF"
+msgstr "PDF OLUŞTUR"
+
+#: src/app.py:585
+msgid "Theme"
+msgstr "Tema"
+
+#: src/app.py:586 src/mixins/theme_mixin.py:116
+msgid "Dynamic Color"
+msgstr "Dinamik Renk"
+
+#: src/app.py:587
+msgid "Use system color"
+msgstr "Sistem rengini kullan"
+
+#: src/app.py:590
+msgid "Create PDFs"
+msgstr "PDF Oluştur"
+
+#: src/app.py:593
+msgid "Show Tutorial"
+msgstr "Öğreticiyi Göster"
+
+#: src/app.py:594
+msgid "Show Initial Tutorial"
+msgstr "Başlangıç Öğreticisini Göster"
+
+#: src/app.py:595 src/mixins/theme_mixin.py:55
+msgid "Blue"
+msgstr "Mavi"
+
+#: src/app.py:596 src/mixins/theme_mixin.py:56
+msgid "Red"
+msgstr "Kırmızı"
+
+#: src/app.py:597 src/mixins/theme_mixin.py:57
+msgid "Green"
+msgstr "Yeşil"
+
+#: src/app.py:598 src/mixins/theme_mixin.py:58
+msgid "Yellow"
+msgstr "Sarı"
+
+#: src/app.py:599
+msgid "Default (Downloads)"
+msgstr "Varsayılan (İndirilenler)"
+
+#: src/app.py:600
+msgid "Language"
+msgstr "Dil"
+
+#: src/app.py:601
+msgid "Search by file name..."
+msgstr "Dosya adı ara..."
+
+#: src/app.py:602
+msgid "Color Palette"
+msgstr "Renk Paleti"
+
+#: src/app.py:603
+msgid "Jan"
+msgstr "Oca"
+
+#: src/app.py:604
+msgid "Feb"
+msgstr "Şub"
+
+#: src/app.py:605
+msgid "Mar"
+msgstr "Mar"
+
+#: src/app.py:606
+msgid "Apr"
+msgstr "Nis"
+
+#: src/app.py:607
+msgid "May"
+msgstr "May"
+
+#: src/app.py:621
+msgid "May_full"
+msgstr "Mayıs"
+
+#: src/app.py:608
+msgid "Jun"
+msgstr "Haz"
+
+#: src/app.py:609
+msgid "Jul"
+msgstr "Tem"
+
+#: src/app.py:610
+msgid "Aug"
+msgstr "Ağu"
+
+#: src/app.py:611
+msgid "Sep"
+msgstr "Eyl"
+
+#: src/app.py:612
+msgid "Oct"
+msgstr "Eki"
+
+#: src/app.py:613
+msgid "Nov"
+msgstr "Kas"
+
+#: src/app.py:614
+msgid "Dec"
+msgstr "Ara"
+
+#: src/app.py:615 src/mixins/course_mixin.py:282 src/mixins/course_mixin.py:295
+#: src/ui/screens/create_pdfs.py:23 src/ui/screens/create_pdfs.py:58
+msgid "Ok"
+msgstr "Tamam"
+
+#: src/app.py:616 src/mixins/course_mixin.py:283 src/mixins/course_mixin.py:296
+#: src/mixins/course_mixin.py:502 src/mixins/course_mixin.py:624
+#: src/mixins/history_mixin.py:81 src/mixins/naming_mixin.py:145
+#: src/mixins/naming_mixin.py:210 src/mixins/schedule_mixin.py:41
+#: src/mixins/schedule_mixin.py:233 src/ui/screens/create_pdfs.py:24
+#: src/ui/screens/create_pdfs.py:59
+msgid "Cancel"
+msgstr "İptal"
+
+#: src/app.py:617
+msgid "January"
+msgstr "Ocak"
+
+#: src/app.py:618
+msgid "February"
+msgstr "Şubat"
+
+#: src/app.py:619
+msgid "March"
+msgstr "Mart"
+
+#: src/app.py:620
+msgid "April"
+msgstr "Nisan"
+
+#: src/app.py:622
+msgid "June"
+msgstr "Haziran"
+
+#: src/app.py:623
+msgid "July"
+msgstr "Temmuz"
+
+#: src/app.py:624
+msgid "August"
+msgstr "Ağustos"
+
+#: src/app.py:625
+msgid "September"
+msgstr "Eylül"
+
+#: src/app.py:626
+msgid "October"
+msgstr "Ekim"
+
+#: src/app.py:627
+msgid "November"
+msgstr "Kasım"
+
+#: src/app.py:628
+msgid "December"
+msgstr "Aralık"
+
+#: src/app.py:629
+msgid "initial_M"
+msgstr "P"
+
+#: src/app.py:630
+msgid "initial_T1"
+msgstr "S"
+
+#: src/app.py:631
+msgid "initial_W"
+msgstr "Ç"
+
+#: src/app.py:632
+msgid "initial_T2"
+msgstr "P"
+
+#: src/app.py:633
+msgid "initial_F"
+msgstr "C"
+
+#: src/app.py:634
+msgid "initial_S1"
+msgstr "C"
+
+#: src/app.py:635
+msgid "initial_S2"
+msgstr "P"
+
+#: src/app.py:636
+msgid "mm/dd/yyyy"
+msgstr "aa/gg/yyyy"
+
+#: src/app.py:637
+msgid "File missing!"
+msgstr "Dosya kayıp!"
+
+#: src/app.py:638
+msgid "PDF Naming Format"
+msgstr "PDF İsim Formatı"
+
+#: src/app.py:639
+msgid "Customize PDF file names"
+msgstr "PDF isimle"
+
+#: src/app.py:640 src/mixins/naming_mixin.py:119
+msgid "Format Name"
+msgstr "Format Adı"
+
+#: src/app.py:641 src/mixins/naming_mixin.py:128
+msgid "Format String"
+msgstr "Format Metni"
+
+#: src/app.py:642 src/mixins/naming_mixin.py:132
+#, python-brace-format
+msgid "Available variables: {course}, {week}, {schedule}, {num_photos}"
+msgstr "Kullanılabilir değişkenler: {course}, {week}, {schedule}, {num_photos}"
+
+#: src/app.py:643 src/mixins/naming_mixin.py:133
+#, python-brace-format
+msgid "Example: {course}_lecture_{week:02d}"
+msgstr "Örnek: {course}_lecture_{week:02d}"
+
+#: src/app.py:644 src/mixins/naming_mixin.py:155
+msgid "Add Format"
+msgstr "Format Ekle"
+
+#: src/app.py:645 src/mixins/naming_mixin.py:155
+msgid "Edit Format"
+msgstr "Formatı Düzenle"
+
+#: src/app.py:646 src/mixins/naming_mixin.py:228
+msgid "Delete Format?"
+msgstr "Format Silinsin mi?"
+
+#: src/app.py:647 src/mixins/naming_mixin.py:181
+msgid "Invalid format string!"
+msgstr "Geçersiz Format!"
+
+#: src/app.py:648 src/mixins/naming_mixin.py:63
+msgid "Week First"
+msgstr "Önce Hafta"
+
+#: src/app.py:649
+msgid "Course First"
+msgstr "Önce Ders"
+
+#: src/app.py:650
+msgid "Simple"
+msgstr "Basit"
+
+#: src/mixins/course_mixin.py:132
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
-#: main.py:1703 main.py:1929 main.py:2020 test.py:1703 test.py:1939
-#: test.py:2030
+#: src/mixins/course_mixin.py:264 src/mixins/course_mixin.py:443
+#: src/mixins/course_mixin.py:534
 msgid "Select Day"
 msgstr "Gün Seç"
 
-#: main.py:1720 main.py:1733 test.py:1720 test.py:1733
+#: src/mixins/course_mixin.py:281 src/mixins/course_mixin.py:294
 msgid "Select Time"
 msgstr "Zaman Seç"
 
-#: main.py:1750 test.py:1750
+#: src/mixins/course_mixin.py:311
 msgid "Hour"
 msgstr "Saat"
 
-#: main.py:1752 test.py:1752
+#: src/mixins/course_mixin.py:313
 msgid "Minute"
 msgstr "Dakika"
 
-#: main.py:1834 test.py:1844
+#: src/mixins/course_mixin.py:348
 msgid "Select Course Color"
 msgstr "Ders Rengi Seç"
 
-#: main.py:1890 test.py:1900
+#: src/mixins/course_mixin.py:404
 msgid "Course Name"
 msgstr "Ders Adı"
 
-#: main.py:1957 test.py:1967
+#: src/mixins/course_mixin.py:471
 msgid "Start"
 msgstr "Başlangıç"
 
-#: main.py:1973 test.py:1983
+#: src/mixins/course_mixin.py:487
 msgid "End"
 msgstr "Bitiş"
 
-#: main.py:1991 test.py:2001
+#: src/mixins/course_mixin.py:505 src/mixins/naming_mixin.py:148
 msgid "Update"
 msgstr "Güncelle"
 
-#: main.py:1991 test.py:2001
+#: src/mixins/course_mixin.py:505 src/mixins/naming_mixin.py:148
 msgid "Save"
 msgstr "Kaydet"
 
-#: main.py:1997 test.py:2007
+#: src/mixins/course_mixin.py:511
 msgid "Edit Course"
 msgstr "Ders Düzenle"
 
-#: main.py:1997 test.py:2007
+#: src/mixins/course_mixin.py:511
 msgid "Add Course"
 msgstr "Ders Ekle"
 
-#: main.py:2021 main.py:2026 test.py:2031 test.py:2036
+#: src/mixins/course_mixin.py:535 src/mixins/course_mixin.py:540
 msgid "Required!"
 msgstr "Gerekli!"
 
-#: main.py:2040 test.py:2050
+#: src/mixins/course_mixin.py:554
 msgid "Invalid!"
 msgstr "Geçersiz!"
 
-#: main.py:2064 test.py:2074
+#: src/mixins/course_mixin.py:578
 msgid "Conflict with"
 msgstr "Çakışma"
 
-#: main.py:2116 main.py:2399 test.py:2126 test.py:2409
+#: src/mixins/course_mixin.py:630 src/mixins/naming_mixin.py:217
+#: src/mixins/schedule_mixin.py:238
 msgid "Delete"
 msgstr "Sil"
 
-#: main.py:2120 main.py:2402 test.py:2130 test.py:2412
+#: src/mixins/course_mixin.py:634 src/mixins/naming_mixin.py:225
+#: src/mixins/schedule_mixin.py:241
 msgid "Are you sure you want to delete"
 msgstr "Silmek istediğinize emin misiniz"
 
-#: main.py:2124 test.py:2134
+#: src/mixins/course_mixin.py:638
 msgid "Delete Course?"
 msgstr "Ders Silinsin mi?"
 
-#: main.py:2184 test.py:2194
-msgid "Schedule Name"
-msgstr "Program Adı"
+#: src/mixins/history_mixin.py:86
+msgid "Remove"
+msgstr "Kaldır"
 
-#: main.py:2187 test.py:2197
-msgid "This name already exists!"
-msgstr "Bu isim zaten mevcut!"
+#: src/mixins/history_mixin.py:90
+msgid "File Not Found"
+msgstr "Dosya Bulunamadı"
 
-#: main.py:2206 test.py:2216
-msgid "Next"
-msgstr "Sonraki"
+#: src/mixins/history_mixin.py:94
+msgid "This PDF has been moved or deleted. Would you like to remove it from history?"
+msgstr "PDF silinmiş veya taşınmış. Geçmişten silinsin mi?"
 
-#: main.py:2210 test.py:2220
-msgid "Creating a new schedule"
-msgstr "Yeni program oluşturuluyor"
+#: src/mixins/history_mixin.py:112
+msgid "Record removed successfully!"
+msgstr "Kayıt başarıyla silindi!"
 
-#: main.py:2320 test.py:2330
-msgid "Active"
-msgstr "Aktif"
+#: src/mixins/history_mixin.py:147
+msgid "Course"
+msgstr "Ders"
 
-#: main.py:2321 test.py:2331
-msgid "Click to activate"
-msgstr "Aktifleştirmek için tıkla"
+#: src/mixins/history_mixin.py:148
+msgid "Schedule"
+msgstr "Program"
 
-#: main.py:2406 test.py:2416
-msgid "Delete Schedule?"
-msgstr "Program Silinsin mi?"
+#: src/mixins/history_mixin.py:149
+msgid "Week"
+msgstr "Hafta"
 
-#: main.py:2540 test.py:2550
+#: src/mixins/pdf_mixin.py:23
 msgid "No active schedule found!"
 msgstr "Aktif program bulunamadı!"
 
-#: main.py:2545 test.py:2555
+#: src/mixins/pdf_mixin.py:28
 msgid "Please select a semester start date!"
 msgstr "Dönem başlangıç tarihi seçin!"
 
-#: main.py:2551 test.py:2561
+#: src/mixins/pdf_mixin.py:34
 msgid "Invalid date format in settings!"
 msgstr "Geçersiz tarih formatı!"
 
-#: main.py:2559 test.py:2569
+#: src/mixins/pdf_mixin.py:42
 msgid "Please select a folder or photos!"
 msgstr "Bir klasör ya da fotoğraf seçin!"
 
-#: main.py:2576 test.py:2586
+#: src/mixins/pdf_mixin.py:59
 msgid "No files found to process!"
 msgstr "İşlenmek için dosya bulunamadı!"
 
-#: main.py:2582 test.py:2592
+#: src/mixins/pdf_mixin.py:65
 msgid "Generating PDFs..."
 msgstr "PDFler oluşturuluyor..."
 
-#: main.py:2585 test.py:2595
+#: src/mixins/pdf_mixin.py:68
 msgid "Please wait, analyzing photos and creating documents."
 msgstr "Lütfen bekleyin, fotoğraflar analiz ediliyor ve dokümanlar oluşturuluyor."
 
-#: main.py:2626 test.py:2636
+#: src/mixins/pdf_mixin.py:111
 msgid "No matching lectures found for these photos."
 msgstr "Bu ders için eşleşen ders bulunamadı."
 
-#: main.py:2635 test.py:2645
+#: src/mixins/pdf_mixin.py:121
 #, python-brace-format
 msgid "Success! {count} PDFs are created"
 msgstr "Başarılı! {count} PDF oluşturuldu"
 
-#: main.py:2639 test.py:2649
+#: src/mixins/pdf_mixin.py:125
 msgid "No PDFs created (check dates/times)."
 msgstr "PDF oluşturulamadı (tarihleri/zamanları kontrol et)"
 
-#: main.py:2646 test.py:2656
+#: src/mixins/pdf_mixin.py:132
 #, python-brace-format
 msgid "An unexpected error occurred: {error}"
 msgstr "Beklenmeyen hata: {error}"
 
-#: main.py:2676 test.py:2686
+#: src/mixins/schedule_mixin.py:23
+msgid "Schedule Name"
+msgstr "Program Adı"
+
+#: src/mixins/schedule_mixin.py:26
+msgid "This name already exists!"
+msgstr "Bu isim zaten mevcut!"
+
+#: src/mixins/schedule_mixin.py:45
+msgid "Next"
+msgstr "Sonraki"
+
+#: src/mixins/schedule_mixin.py:49
+msgid "Creating a new schedule"
+msgstr "Yeni program oluşturuluyor"
+
+#: src/mixins/schedule_mixin.py:159
+msgid "Active"
+msgstr "Aktif"
+
+#: src/mixins/schedule_mixin.py:160
+msgid "Click to activate"
+msgstr "Aktifleştirmek için tıkla"
+
+#: src/mixins/schedule_mixin.py:245
+msgid "Delete Schedule?"
+msgstr "Program Silinsin mi?"
+
+#: src/mixins/theme_mixin.py:13
 msgid "System"
 msgstr "Sistem"
 
-#: main.py:2677 test.py:2687
+#: src/mixins/theme_mixin.py:14
 msgid "Light"
 msgstr "Aydınlık"
 
-#: main.py:2678 test.py:2688
+#: src/mixins/theme_mixin.py:15
 msgid "Dark"
 msgstr "Karanlık"
 
-#: main.py:2718 main.py:3060 test.py:2728 test.py:3070
-msgid "Blue"
-msgstr "Mavi"
-
-#: main.py:2719 main.py:3061 test.py:2729 test.py:3071
-msgid "Red"
-msgstr "Kırmızı"
-
-#: main.py:2720 main.py:3062 test.py:2730 test.py:3072
-msgid "Green"
-msgstr "Yeşil"
-
-#: main.py:2721 main.py:3063 test.py:2731 test.py:3073
-msgid "Yellow"
-msgstr "Sarı"
-
-#: main.py:2836 test.py:2846
+#: src/services/os_utils.py:96
 msgid "Failed to open PDF."
 msgstr "PDF açılamadı."
 
-#: main.py:2848 test.py:2858
-msgid "Remove"
-msgstr "Kaldır"
-
-#: main.py:2852 test.py:2862
-msgid "File Not Found"
-msgstr "Dosya Bulunamadı"
-
-#: main.py:2856 test.py:2866
-msgid "This PDF has been moved or deleted. Would you like to remove it from history?"
-msgstr "PDF silinmiş veya taşınmış. Geçmişten silinsin mi?"
-
-#: main.py:2874 test.py:2884
-msgid "Record removed successfully!"
-msgstr "Kayıt başarıyla silindi!"
-
-#: main.py:2909 test.py:2919
-msgid "Course"
-msgstr "Ders"
-
-#: main.py:2910 test.py:2920
-msgid "Schedule"
-msgstr "Program"
-
-#: main.py:2911 test.py:2921
-msgid "Week"
-msgstr "Hafta"
-
-#: main.py:2927 test.py:2937
+#: src/services/os_utils.py:120
 msgid "PDF file not found!"
 msgstr "PDF dosyası bulunamadı!"
 
-#: main.py:2934 test.py:2944
+#: src/services/os_utils.py:132
 msgid "Failed to open folder location."
 msgstr "Klasör konumu açılamadı."
 
-#: main.py:3031 test.py:3041
-msgid "Monday"
-msgstr "Pazartesi"
+#: src/ui/components/overlays.py:58
+msgid "Click anywhere to continue..."
+msgstr "Devam etmek için herhangi bir yere tıkla..."
 
-#: main.py:3032 test.py:3042
-msgid "Tuesday"
-msgstr "Salı"
+#: src/ui/screens/create_pdfs.py:22
+msgid "Select date"
+msgstr "Tarih seç"
 
-#: main.py:3033 test.py:3043
-msgid "Wednesday"
-msgstr "Çarşamba"
+#: src/ui/screens/create_pdfs.py:57
+msgid "Enter date"
+msgstr "Tarih gir"
 
-#: main.py:3034 test.py:3044
-msgid "Thursday"
-msgstr "Perşembe"
+#: src/ui/screens/create_pdfs.py:60
+msgid "Invalid date format"
+msgstr "Geçersiz tarih formatı"
 
-#: main.py:3035 test.py:3045
-msgid "Friday"
-msgstr "Cuma"
+#: src/ui/screens/create_pdfs.py:83
+msgid "Select Folder"
+msgstr "Klasör Seç"
 
-#: main.py:3036 test.py:3046
-msgid "Saturday"
-msgstr "Cumartesi"
+#: src/ui/screens/settings.py:14
+msgid "Select Output Folder"
+msgstr "Klasör Seç"
 
-#: main.py:3037 test.py:3047
-msgid "Sunday"
-msgstr "Pazar"
-
-#: main.py:3039 test.py:3049
-msgid "Mon"
-msgstr "Pzt"
-
-#: main.py:3040 test.py:3050
-msgid "Tue"
-msgstr "Sal"
-
-#: main.py:3041 test.py:3051
-msgid "Wed"
-msgstr "Çar"
-
-#: main.py:3042 test.py:3052
-msgid "Thu"
-msgstr "Per"
-
-#: main.py:3043 test.py:3053
-msgid "Fri"
-msgstr "Cum"
-
-#: main.py:3044 test.py:3054
-msgid "Sat"
-msgstr "Cmt"
-
-#: main.py:3045 test.py:3055
-msgid "Sun"
-msgstr "Pzr"
-
-#: main.py:3047 test.py:3057
-msgid "Select Semester Start Date"
-msgstr "Dönem Başlangıç Tarihi Seç"
-
-#: main.py:3050 test.py:3060
-msgid "GENERATE PDF"
-msgstr "PDF OLUŞTUR"
-
-#: main.py:3051 test.py:3061
-msgid "Theme"
-msgstr "Tema"
-
-#: main.py:3052 test.py:3062
-msgid "Dynamic Color"
-msgstr "Dinamik Renk"
-
-#: main.py:3053 test.py:3063
-msgid "Use system color"
-msgstr "Sistem rengini kullan"
-
-#: main.py:3055 test.py:3065
-msgid "Create PDFs"
-msgstr "PDF Oluştur"
-
-#: main.py:3058 test.py:3068
-msgid "Show Tutorial"
-msgstr "Öğreticiyi Göster"
-
-#: main.py:3059 test.py:3069
-msgid "Show Initial Tutorial"
-msgstr "Başlangıç Öğreticisini Göster"
-
-#: main.py:3064 test.py:3074
-msgid "Default (Downloads)"
-msgstr "Varsayılan (İndirilenler)"
-
-#: main.py:3065 test.py:3075
-msgid "Language"
-msgstr "Dil"
-
-#: main.py:3066 test.py:3076
-msgid "Search by file name..."
-msgstr "Dosya adı ara..."
-
-#: main.py:3067 test.py:3077
-msgid "Color Palette"
-msgstr "Renk Paleti"
-
-#: main.py:3068 test.py:3078
-msgid "Jan"
-msgstr "Oca"
-
-#: main.py:3069 test.py:3079
-msgid "Feb"
-msgstr "Şub"
-
-#: main.py:3070 test.py:3080
-msgid "Mar"
-msgstr "Mar"
-
-#: main.py:3071 test.py:3081
-msgid "Apr"
-msgstr "Nis"
-
-#: main.py:3072 main.py:3086 test.py:3082 test.py:3096
-msgid "May"
-msgstr "May"
-
-#: main.py:3073 test.py:3083
-msgid "Jun"
-msgstr "Haz"
-
-#: main.py:3074 test.py:3084
-msgid "Jul"
-msgstr "Tem"
-
-#: main.py:3075 test.py:3085
-msgid "Aug"
-msgstr "Ağu"
-
-#: main.py:3076 test.py:3086
-msgid "Sep"
-msgstr "Eyl"
-
-#: main.py:3077 test.py:3087
-msgid "Oct"
-msgstr "Eki"
-
-#: main.py:3078 test.py:3088
-msgid "Nov"
-msgstr "Kas"
-
-#: main.py:3079 test.py:3089
-msgid "Dec"
-msgstr "Ara"
-
-#: main.py:3082 test.py:3092
-msgid "January"
-msgstr "Ocak"
-
-#: main.py:3083 test.py:3093
-msgid "February"
-msgstr "Şubat"
-
-#: main.py:3084 test.py:3094
-msgid "March"
-msgstr "Mart"
-
-#: main.py:3085 test.py:3095
-msgid "April"
-msgstr "Nisan"
-
-#: main.py:3087 test.py:3097
-msgid "June"
-msgstr "Haziran"
-
-#: main.py:3088 test.py:3098
-msgid "July"
-msgstr "Temmuz"
-
-#: main.py:3089 test.py:3099
-msgid "August"
-msgstr "Ağustos"
-
-#: main.py:3090 test.py:3100
-msgid "September"
-msgstr "Eylül"
-
-#: main.py:3091 test.py:3101
-msgid "October"
-msgstr "Ekim"
-
-#: main.py:3092 test.py:3102
-msgid "November"
-msgstr "Kasım"
-
-#: main.py:3093 test.py:3103
-msgid "December"
-msgstr "Aralık"
-
-#: main.py:3094 test.py:3104
-msgid "initial_M"
-msgstr "P"
-
-#: main.py:3095 test.py:3105
-msgid "initial_T1"
-msgstr "S"
-
-#: main.py:3096 test.py:3106
-msgid "initial_W"
-msgstr "Ç"
-
-#: main.py:3097 test.py:3107
-msgid "initial_T2"
-msgstr "P"
-
-#: main.py:3098 test.py:3108
-msgid "initial_F"
-msgstr "C"
-
-#: main.py:3099 test.py:3109
-msgid "initial_S1"
-msgstr "C"
-
-#: main.py:3100 test.py:3110
-msgid "initial_S2"
-msgstr "P"
-
-#: main.py:3101 test.py:3111
-msgid "mm/dd/yyyy"
-msgstr "aa/gg/yyyy"
-
-#: main.py:3102 test.py:3112
-msgid "File missing!"
-msgstr "Dosya kayıp!"
-
-#: test.py:1795 test.py:3113
-msgid "May_long"
-msgstr "Mayıs"
-
-#: test.py:1799 test.py:3114
-msgid "May_short"
-msgstr "May"
+#~ msgid "Photo date must be after semester start"
+#~ msgstr "Fotoğraf tarihi dönem başından önce"
 
 #~ msgid "Default"
 #~ msgstr "Varsayılan"

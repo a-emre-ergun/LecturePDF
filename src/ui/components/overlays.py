@@ -6,6 +6,8 @@ from kivymd.app import MDApp
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.label import MDLabel
 
+from src.utils.platform import is_android
+
 
 class TutorialOverlay(MDFloatLayout):
     def __init__(self, steps, **kwargs):
@@ -55,7 +57,10 @@ class TutorialOverlay(MDFloatLayout):
         text_pos_y = .75 if abs_pos[1] < Window.height / 2 else .25
 
         app = MDApp.get_running_app()
-        continue_text = app.tr._("Click anywhere to continue...")
+        if is_android():
+            continue_text = app.tr._("Tap anywhere to continue...")
+        else:
+            continue_text = app.tr._("Click anywhere to continue...")
 
         info_label = MDLabel(
             text=f"[b][size=20sp]{title}[/size][/b]\n\n{desc}\n\n[i][size=13sp]{continue_text}[/size][/i]",

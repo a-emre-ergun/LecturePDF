@@ -21,6 +21,9 @@ msgstr "Photo date must be after semester start"
 msgid "Tap anywhere to continue..."
 msgstr "Tap anywhere to continue..."
 
+msgid "Click anywhere to continue..."
+msgstr "Click anywhere to continue..."
+
 #: helpers.py:346
 msgid "Select date"
 msgstr "Select date"
@@ -353,6 +356,53 @@ msgstr "Dynamic Color"
 msgid "Use system color"
 msgstr "Use system color"
 
+msgid "System Language"
+msgstr "System Language"
+
 #: helpers.py:2186
 msgid "Create PDFs"
 msgstr "Create PDFs"
+
+msgid "PDF Naming Format"
+msgstr "PDF Naming Format"
+
+msgid "Customize PDF file names"
+msgstr "Customize PDF file names"
+
+msgid "Format Name"
+msgstr "Format Name"
+
+msgid "Format String"
+msgstr "Format String"
+
+#, python-brace-format
+msgid "Available variables: {course}, {week}, {schedule}, {num_photos}"
+msgstr "Available variables: {course}, {week}, {schedule}, {num_photos}"
+
+#, python-brace-format
+msgid "Example: {course}_lecture_{week:02d}"
+msgstr "Example: {course}_lecture_{week:02d}"
+
+msgid "Add Format"
+msgstr "Add Format"
+
+msgid "Edit Format"
+msgstr "Edit Format"
+
+msgid "Delete Format?"
+msgstr "Delete Format?"
+
+msgid "Invalid format string!"
+msgstr "Invalid format string!"
+
+msgid "Week First"
+msgstr "Week First"
+
+msgid "Course First"
+msgstr "Course First"
+
+msgid "Simple"
+msgstr "Simple"
+
+msgid "May_full"
+msgstr "May"

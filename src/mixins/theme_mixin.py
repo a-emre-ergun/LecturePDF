@@ -1,9 +1,11 @@
 import os
 
+from kivy.clock import Clock
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.list import MDListItem, MDListItemHeadlineText, MDListItemTrailingIcon
 
 from src.services.os_utils import get_system_theme_style
+from src.utils.platform import is_android, is_desktop
 
 
 class ThemeMixin:
@@ -82,32 +84,78 @@ class ThemeMixin:
         self.save_setting("color_palette", palette_name)
         self.refresh_schedule_list_ui()
 
+    def toggle_dynamic_color(self, active):
+        self.dynamic_color_enabled = active
+        self.save_setting("dynamic_color", active)
+        if active:
+            self.apply_dynamic_color()
+        else:
+            saved_palette = self.get_setting("color_palette") or "Blue"
+            self.set_palette(saved_palette)
+
+    def apply_dynamic_color(self):
+        if not is_android():
+            self.dynamic_color_enabled = False
+            self.save_setting("dynamic_color", False)
+            return
+
+        try:
+            from jnius import autoclass
+            PythonActivity = autoclass("org.kivy.android.PythonActivity")
+            context = PythonActivity.mActivity
+
+            WallpaperManager = autoclass("android.app.WallpaperManager")
+            wm = WallpaperManager.getInstance(context)
+
+            colors = wm.getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
+            if colors:
+                primary_color_int = colors.getPrimaryColor().toArgb()
+                r = (primary_color_int >> 16) & 0xFF
+                g = (primary_color_int >> 8) & 0xFF
+                b = primary_color_int & 0xFF
+                self.theme_cls.primaryColor = [r / 255, g / 255, b / 255, 1]
+                self.current_palette_name = self._("Dynamic Color")
+        except Exception as e:
+            print(f"Dynamic color error: {e}")
+            self.dynamic_color_enabled = False
+            self.save_setting("dynamic_color", False)
+
     def open_language_screen(self):
         self.load_language_list()
-        self.root.ids.screen_manager.current = "LanguageScreen"
 
         gb = self.root.ids.global_app_bar
+        gb.height = 0
+        gb.size_hint_y = 0
         gb.opacity = 0
         gb.disabled = True
-        gb.height = 0
 
         nb = self.root.ids.nav_bar
+        nb.height = 0
+        nb.size_hint_y = 0
         nb.opacity = 0
         nb.disabled = True
-        nb.height = 0
+
+        sm = self.root.ids.screen_manager
+        Clock.schedule_once(lambda dt: setattr(sm, "current", "LanguageScreen"), 0)
 
     def go_back_to_settings(self):
-        self.root.ids.screen_manager.current = "Settings"
+        sm = self.root.ids.screen_manager
+        current_screen = sm.get_screen(sm.current)
+        current_screen.opacity = 0
 
         gb = self.root.ids.global_app_bar
+        gb.size_hint_y = None
+        gb.height = "64dp"
         gb.opacity = 1
         gb.disabled = False
-        gb.height = "64dp"
 
         nb = self.root.ids.nav_bar
+        nb.size_hint_y = None
+        nb.height = "80dp"
         nb.opacity = 1
         nb.disabled = False
-        nb.height = "80dp"
+
+        Clock.schedule_once(lambda dt: setattr(sm, "current", "Settings"), 0)
 
     def load_language_list(self):
         screen = self.root.ids.screen_manager.get_screen("LanguageScreen")
@@ -115,8 +163,24 @@ class ThemeMixin:
         list_container.clear_widgets()
 
         saved_lang = self.get_setting("language")
-        if not saved_lang or saved_lang not in self.available_languages:
+        if not saved_lang or (saved_lang != "system" and saved_lang not in self.available_languages):
             saved_lang = "en"
+
+        system_item = MDListItem(
+            on_release=lambda x: self.select_language_and_go_back(
+                "system", self._("System Language"))
+        )
+        system_item.add_widget(
+            MDListItemHeadlineText(text=self._("System Language")))
+        if saved_lang == "system":
+            system_item.add_widget(
+                MDListItemTrailingIcon(
+                    icon="check-circle",
+                    theme_icon_color="Custom",
+                    icon_color=self.theme_cls.primaryColor
+                )
+            )
+        list_container.add_widget(system_item)
 
         for lang_code, lang_name in self.available_languages.items():
             item = MDListItem(
@@ -137,11 +201,16 @@ class ThemeMixin:
             list_container.add_widget(item)
 
     def select_language_and_go_back(self, lang_code, lang_name):
+        resolved = self._resolve_language(lang_code)
+
         if self.tr:
-            self.tr.switch_language(lang_code)
+            self.tr.switch_language(resolved)
 
         self.save_setting("language", lang_code)
-        self.current_language_name = lang_name
+        if lang_code == "system":
+            self.current_language_name = self._("System Language")
+        else:
+            self.current_language_name = lang_name
 
         self.refresh_schedule_list_ui()
 
@@ -149,5 +218,6 @@ class ThemeMixin:
             self.root.ids.top_app_bar_title.text = self._("Settings")
 
         self.refresh_create_screen_texts()
+        self._refresh_naming_format_name()
 
         self.go_back_to_settings()

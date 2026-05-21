@@ -79,13 +79,10 @@ class CreatePDFsScreen(MDScreen):
                 app.show_snackbar(msg)
                 return
 
-            path = pick_folder(title=app.tr._("Select Folder"))
-
-            if path:
-                self.selected_folder_path = path
-                self.ids.btn_folder_text.text = os.path.basename(path)
-                self.ids.btn_clear_folder.opacity = 1
-                self.ids.btn_clear_folder.disabled = False
+            pick_folder(
+                title=app.tr._("Select Folder"),
+                on_selection=self._on_folder_selected
+            )
 
         elif mode == "image":
             if self.selected_folder_path:
@@ -93,14 +90,34 @@ class CreatePDFsScreen(MDScreen):
                 app.show_snackbar(msg)
                 return
 
-            files = pick_images(title=app.tr._("Select Photos"))
+            pick_images(
+                title=app.tr._("Select Photos"),
+                on_selection=self._on_images_selected
+            )
 
-            if files:
-                self.selected_images_list = files
-                count = len(files)
-                self.ids.btn_photo_text.text = f"{count} {app.tr._('Photos Selected')}"
-                self.ids.btn_clear_photos.opacity = 1
-                self.ids.btn_clear_photos.disabled = False
+    def _on_folder_selected(self, path):
+        if not path:
+            return
+        Clock.schedule_once(lambda dt: self._apply_folder(path))
+
+    def _apply_folder(self, path):
+        self.selected_folder_path = path
+        self.ids.btn_folder_text.text = os.path.basename(path)
+        self.ids.btn_clear_folder.opacity = 1
+        self.ids.btn_clear_folder.disabled = False
+
+    def _on_images_selected(self, files):
+        if not files:
+            return
+        Clock.schedule_once(lambda dt: self._apply_images(files))
+
+    def _apply_images(self, files):
+        app = MDApp.get_running_app()
+        self.selected_images_list = files
+        count = len(files)
+        self.ids.btn_photo_text.text = f"{count} {app.tr._('Photos Selected')}"
+        self.ids.btn_clear_photos.opacity = 1
+        self.ids.btn_clear_photos.disabled = False
 
     def clear_selection(self, mode):
         app = MDApp.get_running_app()

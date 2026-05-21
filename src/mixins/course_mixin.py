@@ -141,7 +141,7 @@ class CourseMixin:
         )
 
         lbl_time = MDLabel(
-            text=f"{course_data.get("start_time", "")} - {course_data.get("end_time", "")}",
+            text=f"{course_data.get('start_time', '')} - {course_data.get('end_time', '')}",
             font_style="Label",
             role="large",
             theme_text_color="Custom",

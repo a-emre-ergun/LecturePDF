@@ -15,42 +15,50 @@ from src.services.os_utils import open_pdf_file, open_file_location, get_pdf_thu
 class HistoryMixin:
     def open_history_screen(self):
         sm = self.root.ids.screen_manager
-        sm.current = "HistoryScreen"
-
-        gb = self.root.ids.global_app_bar
-        gb.opacity = 0
-        gb.disabled = True
-        gb.height = 0
-
-        nb = self.root.ids.nav_bar
-        nb.opacity = 0
-        nb.disabled = True
-        nb.height = 0
-
-        self.toggle_fab(False)
 
         history_screen = sm.get_screen("HistoryScreen")
         btn = history_screen.ids.view_toggle_btn
         btn.icon = "view-list" if self.history_view_mode == "grid" else "view-grid"
-
         history_screen.ids.search_field.text = ""
 
         self.load_history_to_ui()
 
-    def go_back_from_history(self):
-        self.root.ids.screen_manager.current = "Create PDFs"
-
         gb = self.root.ids.global_app_bar
-        gb.opacity = 1
-        gb.disabled = False
-        gb.height = "64dp"
+        gb.height = 0
+        gb.size_hint_y = 0
+        gb.opacity = 0
+        gb.disabled = True
 
         nb = self.root.ids.nav_bar
-        nb.opacity = 1
-        nb.disabled = False
-        nb.height = "80dp"
+        nb.height = 0
+        nb.size_hint_y = 0
+        nb.opacity = 0
+        nb.disabled = True
 
         self.toggle_fab(False)
+
+        Clock.schedule_once(lambda dt: setattr(sm, "current", "HistoryScreen"), 0)
+
+    def go_back_from_history(self):
+        sm = self.root.ids.screen_manager
+        current_screen = sm.get_screen(sm.current)
+        current_screen.opacity = 0
+
+        gb = self.root.ids.global_app_bar
+        gb.size_hint_y = None
+        gb.height = "64dp"
+        gb.opacity = 1
+        gb.disabled = False
+
+        nb = self.root.ids.nav_bar
+        nb.size_hint_y = None
+        nb.height = "80dp"
+        nb.opacity = 1
+        nb.disabled = False
+
+        self.toggle_fab(False)
+
+        Clock.schedule_once(lambda dt: setattr(sm, "current", "Create PDFs"), 0)
 
     def toggle_history_view(self):
         self.history_view_mode = "grid" if self.history_view_mode == "list" else "list"

@@ -87,14 +87,16 @@ class PDFGenerationMixin:
 
         self.is_generating_process_active = True
 
+        naming_format = self.get_active_naming_format()
+
         threading.Thread(
             target=self._run_pdf_generation_thread,
             args=(schedule_full_path, semester_start_date,
-                  files_to_process, output_dir),
+                  files_to_process, output_dir, naming_format),
             daemon=True
         ).start()
 
-    def _run_pdf_generation_thread(self, schedule_path, start_date, file_list, output_dir):
+    def _run_pdf_generation_thread(self, schedule_path, start_date, file_list, output_dir, naming_format):
         is_success = False
         try:
             processor = LecturePDF(verbose=True)
@@ -112,7 +114,8 @@ class PDFGenerationMixin:
                     (s["name"] for s in self.schedules if s["active"]), "Unknown")
                 created_files = processor.create_pdfs(
                     organized_data, output_dir, db=self.db,
-                    schedule_name=active_schedule_name)
+                    schedule_name=active_schedule_name,
+                    naming_format=naming_format)
                 count = len(created_files)
                 if count > 0:
                     msg = self._("Success! {count} PDFs are created").format(
