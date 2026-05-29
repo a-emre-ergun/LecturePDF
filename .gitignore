@@ -19,9 +19,3 @@ dist/
 .venv/
 venv/
 env/
-
-# App-specific files
-pdfs.db
-schedules_index.json
-settings.json
-.thumbnails/
