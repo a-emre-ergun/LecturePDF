@@ -53,5 +53,65 @@ class DatabaseManager:
         self.cursor.execute("DELETE FROM PDFS WHERE filepath = ?", (filepath,))
         self.conn.commit()
 
+    def get_distinct_courses(self):
+        self.cursor.execute('''
+            SELECT DISTINCT course
+            FROM PDFS
+            ORDER BY course ASC
+        ''')
+        return [row[0] for row in self.cursor.fetchall()]
+
+    def get_filtered_history(self, excluded_courses=None, date_from=None, date_to=None):
+        query = '''
+            SELECT filename, creation_date, filepath, schedule, week, course
+            FROM PDFS
+            WHERE 1=1
+        '''
+        params = []
+
+        if excluded_courses:
+            placeholders = ','.join('?' for _ in excluded_courses)
+            query += f' AND course NOT IN ({placeholders})'
+            params.extend(excluded_courses)
+
+        if date_from:
+            query += ' AND creation_date >= ?'
+            params.append(date_from)
+
+        if date_to:
+            query += ' AND creation_date <= ?'
+            params.append(date_to + " 23:59:59")
+
+        query += ' ORDER BY creation_date DESC'
+        self.cursor.execute(query, params)
+        return self.cursor.fetchall()
+
+    def search_filtered_history(self, search_query, excluded_courses=None, date_from=None, date_to=None):
+        query = '''
+            SELECT filename, creation_date, filepath, schedule, week, course
+            FROM PDFS
+            WHERE filename LIKE ?
+        '''
+        name = f"%{search_query}%"
+        params = [name]
+
+        if excluded_courses:
+            placeholders = ','.join('?' for _ in excluded_courses)
+            query += f' AND course NOT IN ({placeholders})'
+            params.extend(excluded_courses)
+
+        if date_from:
+            query += ' AND creation_date >= ?'
+            params.append(date_from)
+
+        if date_to:
+            query += ' AND creation_date <= ?'
+            params.append(date_to + " 23:59:59")
+
+        query += ' ORDER BY creation_date DESC'
+        self.cursor.execute(query, params)
+        return self.cursor.fetchall()
+
     def close(self):
         self.conn.close()
+

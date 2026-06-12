@@ -27,32 +27,66 @@ def pick_images(title="Select Photos", on_selection=None):
 
 
 def _desktop_pick_folder(title, on_selection):
-    from tkinter import filedialog, Tk
+    import sys
+    if sys.platform == "darwin":
+        import subprocess
+        script = f'POSIX path of (choose folder with prompt "{title}")'
+        cmd = ["osascript", "-e", script]
+        try:
+            proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            path = proc.stdout.strip()
+            result = path if path else None
+        except subprocess.CalledProcessError:
+            result = None
+    else:
+        from tkinter import filedialog, Tk
 
-    root = Tk()
-    root.withdraw()
-    root.attributes("-topmost", True)
-    path = filedialog.askdirectory(title=title)
-    root.destroy()
-    result = path if path else None
+        root = Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        path = filedialog.askdirectory(title=title)
+        root.destroy()
+        result = path if path else None
+
     if on_selection:
         on_selection(result)
     return result
 
 
 def _desktop_pick_images(title, on_selection):
-    from tkinter import filedialog, Tk
+    import sys
+    if sys.platform == "darwin":
+        import subprocess
+        script = f'''
+        set chosenFiles to choose file with prompt "{title}" of type {{"public.image"}} with multiple selections allowed
+        set posixPaths to {{}}
+        repeat with aFile in chosenFiles
+            set end of posixPaths to POSIX path of aFile
+        end repeat
+        set AppleScript's text item delimiters to linefeed
+        posixPaths as string
+        '''
+        cmd = ["osascript", "-e", script]
+        try:
+            proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            output = proc.stdout.strip()
+            result = output.split("\n") if output else []
+        except subprocess.CalledProcessError:
+            result = []
+    else:
+        from tkinter import filedialog, Tk
 
-    root = Tk()
-    root.withdraw()
-    root.attributes("-topmost", True)
-    files = filedialog.askopenfilenames(
-        title=title,
-        filetypes=[
-            ("Image files", "*.jpg *.jpeg *.png *.JPG *.JPEG *.PNG")]
-    )
-    root.destroy()
-    result = list(files) if files else []
+        root = Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        files = filedialog.askopenfilenames(
+            title=title,
+            filetypes=[
+                ("Image files", "*.jpg *.jpeg *.png *.JPG *.JPEG *.PNG")]
+        )
+        root.destroy()
+        result = list(files) if files else []
+
     if on_selection:
         on_selection(result)
     return result

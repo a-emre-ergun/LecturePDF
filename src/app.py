@@ -661,3 +661,17 @@ class App(ScheduleMixin, CourseMixin, HistoryMixin, PDFGenerationMixin, ThemeMix
         _("Simple")
         _("Tap anywhere to continue...")
         _("Click anywhere to continue...")
+
+        _("Filter by Course")
+        _("Filter by Date")
+        _("Select Courses")
+        _("Select All")
+        _("Apply")
+        _("Clear Filters")
+        _("Filters cleared.")
+        _("No courses found in history.")
+        _("Start Date")
+        _("End Date")
+        _("Enter dates in YYYY-MM-DD format:")
+        _("Invalid date format! Use YYYY-MM-DD.")
+
