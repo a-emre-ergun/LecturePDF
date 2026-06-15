@@ -36,7 +36,7 @@ from src.ui.screens.history import HistoryScreen
 from src.ui.screens.schedules import ScheduleScreen, ScheduleDetailScreen
 from src.ui.screens.settings import SettingsScreen, LanguageScreen
 from src.ui.screens.naming_format import NamingFormatScreen
-from src.ui.components.cards import PDFHistoryCard, BaseMDNavigationItem
+from src.ui.components.cards import PDFHistoryCard, BaseMDNavigationItem, FolderCard
 
 
 apply_touch_fixes()
@@ -233,6 +233,8 @@ class App(ScheduleMixin, CourseMixin, HistoryMixin, PDFGenerationMixin, ThemeMix
 
         if is_desktop():
             Window.bind(on_drop_file=self.on_file_drop)
+            Window.bind(on_drop_begin=self._on_drag_begin)
+            Window.bind(on_drop_end=self._on_drag_end)
 
         Clock.schedule_once(self._bind_back_handler, 0)
 
@@ -261,9 +263,10 @@ class App(ScheduleMixin, CourseMixin, HistoryMixin, PDFGenerationMixin, ThemeMix
             create_screen.ids.btn_folder_text.text = folder_name
             create_screen.ids.btn_clear_folder.opacity = 1
             create_screen.ids.btn_clear_folder.disabled = False
+            self._play_drop_flash(create_screen)
             return
 
-        supported_formats = (".png", ".jpg", ".jpeg")
+        supported_formats = (".png", ".jpg", ".jpeg", ".heic", ".heif")
         if decoded_path.lower().endswith(supported_formats):
             if create_screen.selected_folder_path:
                 self.show_snackbar(
@@ -280,6 +283,32 @@ class App(ScheduleMixin, CourseMixin, HistoryMixin, PDFGenerationMixin, ThemeMix
             create_screen.ids.btn_photo_text.text = f"{count} {photos_selected_lbl}"
             create_screen.ids.btn_clear_photos.opacity = 1
             create_screen.ids.btn_clear_photos.disabled = False
+            self._play_drop_flash(create_screen)
+
+    def _on_drag_begin(self, window, x, y):
+        if self.root.ids.screen_manager.current != "Create PDFs":
+            return
+        create_screen = self.root.ids.screen_manager.get_screen("Create PDFs")
+        from kivy.animation import Animation  # Cross-platform, safe
+        Animation.cancel_all(create_screen.ids.drag_overlay)
+        Animation(opacity=1, duration=0.15).start(
+            create_screen.ids.drag_overlay)
+
+    def _on_drag_end(self, window, x, y):
+        if self.root.ids.screen_manager.current != "Create PDFs":
+            return
+        create_screen = self.root.ids.screen_manager.get_screen("Create PDFs")
+        from kivy.animation import Animation  # Cross-platform, safe
+        Animation.cancel_all(create_screen.ids.drag_overlay)
+        Animation(opacity=0, duration=0.2).start(
+            create_screen.ids.drag_overlay)
+
+    def _play_drop_flash(self, screen):
+        from kivy.animation import Animation  # Cross-platform, safe
+        overlay = screen.ids.drag_overlay
+        Animation.cancel_all(overlay)
+        anim = Animation(opacity=0.6, duration=0.08) + Animation(opacity=0, duration=0.3)
+        anim.start(overlay)
 
     def _bind_back_handler(self, dt):
         Window.bind(on_keyboard=self.handle_back_button)
@@ -590,8 +619,9 @@ class App(ScheduleMixin, CourseMixin, HistoryMixin, PDFGenerationMixin, ThemeMix
         _("Sun")
 
         _("Select Semester Start Date")
-        _("Select Input Folder")
-        _("Select Photos")
+        _("Select or drop a folder")
+        _("Select or drop photos")
+        _("Drop files here")
         _("GENERATE PDF")
         _("Theme")
         _("Dynamic Color")
@@ -664,14 +694,20 @@ class App(ScheduleMixin, CourseMixin, HistoryMixin, PDFGenerationMixin, ThemeMix
 
         _("Filter by Course")
         _("Filter by Date")
+        _("Filter by Program")
         _("Select Courses")
+        _("Select Programs")
         _("Select All")
         _("Apply")
         _("Clear Filters")
         _("Filters cleared.")
+        _("Filters & Grouping")
         _("No courses found in history.")
+        _("No programs found in history.")
         _("Start Date")
         _("End Date")
-        _("Enter dates in YYYY-MM-DD format:")
-        _("Invalid date format! Use YYYY-MM-DD.")
+        _("Invalid date format!")
+        _("Group by Course")
+        _("Group by Program")
+        _("PDFs")
 

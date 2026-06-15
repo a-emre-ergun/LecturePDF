@@ -1,15 +1,19 @@
 import os
+import re
 import json
 from datetime import datetime
 
 from PIL import Image, ImageOps
 from fpdf import FPDF
+from pillow_heif import register_heif_opener
+
+register_heif_opener()
 class LecturePDF:
     EXIF_DATETIME_ORIGINAL = 36867
     EXIF_DATETIME = 306
     EXIF_DATETIME_DIGITIZED = 36868
 
-    SUPPORTED_FORMATS = (".png", ".jpg", ".jpeg")
+    SUPPORTED_FORMATS = (".png", ".jpg", ".jpeg", ".heic", ".heif")
 
     def __init__(self, verbose=True):
         self.verbose = verbose
@@ -33,46 +37,56 @@ class LecturePDF:
         week_no = day_no.days // 7 + 1
         return week_no
 
+    def _parse_date_from_filename(self, filepath):
+        name = os.path.splitext(os.path.basename(filepath))[0]
+        m = re.search(r'(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2})\.(\d{2})', name)
+        if m:
+            return f"{m.group(3)}:{m.group(2)}:{m.group(1)} {m.group(4)}:{m.group(5)}:00"
+        return None
+
     def extract_photos_w_exif(self, file_list):
         exif_results = {}
         no_exif_found = []
 
         for full_path in file_list:
-            if full_path.lower().endswith(self.SUPPORTED_FORMATS):
-                try:
-                    photo = Image.open(full_path)
-                    exif_date = photo.getexif()
+            if not full_path.lower().endswith(self.SUPPORTED_FORMATS):
+                continue
+            try:
+                photo = Image.open(full_path)
+                exif_data = photo.getexif()
+                date_val = None
 
-                    if not exif_date:
-                        no_exif_found.append(full_path)
-                        continue
+                if exif_data:
+                    sub_ifd = exif_data.get_ifd(0x8769)
+                    if sub_ifd:
+                        date_val = sub_ifd.get(self.EXIF_DATETIME_ORIGINAL) or \
+                                   sub_ifd.get(self.EXIF_DATETIME_DIGITIZED)
+                    if not date_val:
+                        date_val = exif_data.get(self.EXIF_DATETIME)
 
-                    found = False
-                    for tag_id, value in exif_date.items():
-                        if isinstance(value, bytes):
-                            try:
-                                value = value.decode("utf-8").strip("\x00")
-                            except:
-                                pass
+                if isinstance(date_val, bytes):
+                    date_val = date_val.decode("utf-8").strip("\x00")
 
-                        if tag_id == self.EXIF_DATETIME_ORIGINAL:
-                            exif_results[full_path] = value
-                            found = True
-                            break
-                        elif tag_id in (self.EXIF_DATETIME, self.EXIF_DATETIME_DIGITIZED):
-                            exif_results[full_path] = value
-                            found = True
+                if not date_val:
+                    date_val = self._parse_date_from_filename(full_path)
 
-                    if not found:
-                        no_exif_found.append(full_path)
+                if date_val:
+                    exif_results[full_path] = date_val
+                else:
+                    no_exif_found.append(full_path)
 
-                except Exception as e:
-                    if self.verbose:
-                        print(f"Error reading {full_path}: {e}")
-                    continue
+            except Exception as e:
+                if self.verbose:
+                    print(f"Error reading {full_path}: {e}")
+                continue
 
         if no_exif_found and self.verbose:
-            print("No EXIF data found in these files:", len(no_exif_found))
+            print("No date info found for:", len(no_exif_found), "files")
+
+        if not exif_results and no_exif_found:
+            raise ValueError(
+                "None of the selected photos contain date information. "
+                "This can happen with screenshots or photos shared via messaging apps.")
 
         return exif_results
 

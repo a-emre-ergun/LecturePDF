@@ -124,12 +124,12 @@ class CreatePDFsScreen(MDScreen):
 
         if mode == "folder":
             self.selected_folder_path = None
-            self.ids.btn_folder_text.text = app.tr._("Select Input Folder")
+            self.ids.btn_folder_text.text = app.tr._("Select or drop a folder")
             self.ids.btn_clear_folder.opacity = 0
             self.ids.btn_clear_folder.disabled = True
 
         elif mode == "image":
             self.selected_images_list = []
-            self.ids.btn_photo_text.text = app.tr._("Select Photos")
+            self.ids.btn_photo_text.text = app.tr._("Select or drop photos")
             self.ids.btn_clear_photos.opacity = 0
             self.ids.btn_clear_photos.disabled = True

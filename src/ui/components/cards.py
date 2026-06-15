@@ -29,3 +29,9 @@ class PDFHistoryCard(MDCard):
 class BaseMDNavigationItem(MDNavigationItem):
     icon = StringProperty()
     text = StringProperty()
+
+
+class FolderCard(MDCard):
+    folder_name = StringProperty()
+    item_count = StringProperty("0")
+    folder_type = StringProperty("course")

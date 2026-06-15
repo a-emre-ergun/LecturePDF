@@ -3,6 +3,7 @@
 #:import FitImage kivymd.uix.fitimage.FitImage
 #:import PlatformScrollView src.ui.components.platform_scroll.PlatformScrollView
 #:import PlatformRecycleView src.ui.components.platform_scroll.PlatformRecycleView
+#:import FolderCard src.ui.components.cards.FolderCard
 
 <PDFHistoryCard>:
     orientation: "vertical" if app.history_view_mode == "grid" else "horizontal"
@@ -67,6 +68,56 @@
             theme_text_color: "Custom"
             text_color: [0.91, 0.05, 0.21, 1] if root.is_missing else app.theme_cls.onSurfaceColor
 
+<FolderCard>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: "80dp"
+    padding: "16dp"
+    spacing: "16dp"
+    radius: [12]
+    md_bg_color: app.theme_cls.surfaceVariantColor
+    ripple_behavior: True
+    on_release: app.open_folder_group(root.folder_name, root.folder_type)
+
+    MDBoxLayout:
+        size_hint: (None, 1)
+        width: "48dp"
+        pos_hint: {"center_y": .5}
+        MDIcon:
+            icon: "folder"
+            theme_icon_color: "Custom"
+            icon_color: app.theme_cls.primaryColor
+            pos_hint: {"center_x": .5, "center_y": .5}
+            font_size: "32sp"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        pos_hint: {"center_y": .5}
+        spacing: "4dp"
+        MDLabel:
+            text: root.folder_name
+            theme_font_size: "Custom"
+            font_size: "16sp"
+            bold: True
+            adaptive_height: True
+            shorten: True
+        MDLabel:
+            text: root.item_count + " " + app.tr._("PDFs")
+            theme_font_size: "Custom"
+            font_size: "13sp"
+            adaptive_height: True
+            theme_text_color: "Secondary"
+
+    MDBoxLayout:
+        size_hint: (None, 1)
+        width: "24dp"
+        pos_hint: {"center_y": .5}
+        MDIcon:
+            icon: "chevron-right"
+            theme_icon_color: "Custom"
+            icon_color: app.theme_cls.onSurfaceVariantColor
+            pos_hint: {"center_x": .5, "center_y": .5}
+
 <BaseMDNavigationItem>:
     ripple_scale: 0
     
@@ -120,11 +171,12 @@
                     on_release: root.open_file_manager("folder")
                     
                     MDButtonIcon:
+                        id: btn_folder_icon
                         icon: "folder-outline"
                     
                     MDButtonText:
                         id: btn_folder_text
-                        text: app.tr._("Select Input Folder")
+                        text: app.tr._("Select or drop a folder")
 
                 MDIconButton:
                     id: btn_clear_folder
@@ -155,11 +207,12 @@
                     on_release: root.open_file_manager("image")
                     
                     MDButtonIcon:
+                        id: btn_photo_icon
                         icon: "image-multiple-outline"
                     
                     MDButtonText:
                         id: btn_photo_text
-                        text: app.tr._("Select Photos")
+                        text: app.tr._("Select or drop photos")
                 
                 MDIconButton:
                     id: btn_clear_photos
@@ -188,6 +241,47 @@
                 MDButtonText:
                     text: app.tr._("GENERATE PDF")
                     pos_hint: {"center_y": .5}
+
+        MDFloatLayout:
+            id: drag_overlay
+            size_hint: (1, 1)
+            opacity: 0
+            canvas.before:
+                Color:
+                    rgba: app.theme_cls.primaryColor[0], app.theme_cls.primaryColor[1], app.theme_cls.primaryColor[2], 0.08
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [0]
+
+            MDBoxLayout:
+                orientation: "vertical"
+                pos_hint: {"center_x": .5, "center_y": .5}
+                adaptive_size: True
+                spacing: "8dp"
+
+                MDIcon:
+                    id: drag_overlay_icon
+                    icon: "import"
+                    halign: "center"
+                    theme_icon_color: "Custom"
+                    icon_color: app.theme_cls.primaryColor
+                    font_size: "56sp"
+                    adaptive_size: True
+                    pos_hint: {"center_x": .5}
+
+                MDLabel:
+                    text: app.tr._("Drop files here")
+                    halign: "center"
+                    theme_font_size: "Custom"
+                    font_size: "16sp"
+                    bold: True
+                    adaptive_height: True
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primaryColor
+                    size_hint_x: None
+                    width: "200dp"
+                    pos_hint: {"center_x": .5}
 
 <ScheduleScreen>:
     MDFloatLayout:
@@ -639,7 +733,7 @@ MDFloatLayout:
                         icon: "tune"
                         style: "standard"
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                        on_release: app.show_filter_menu(self)
+                        on_release: app.show_filter_dialog()
 
                     MDLabel:
                         id: filter_badge

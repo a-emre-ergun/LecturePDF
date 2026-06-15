@@ -1,6 +1,6 @@
 import os
 
-from src.utils.platform import is_android, is_ios
+from src.utils.platform import is_android, is_ios, is_desktop, PLATFORM
 
 _FOLDER_PICK_REQUEST_CODE = 9001
 _IMAGE_PICK_REQUEST_CODE = 9002
@@ -27,69 +27,85 @@ def pick_images(title="Select Photos", on_selection=None):
 
 
 def _desktop_pick_folder(title, on_selection):
-    import sys
-    if sys.platform == "darwin":
-        import subprocess
-        script = f'POSIX path of (choose folder with prompt "{title}")'
-        cmd = ["osascript", "-e", script]
-        try:
-            proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
-            path = proc.stdout.strip()
-            result = path if path else None
-        except subprocess.CalledProcessError:
-            result = None
+    if PLATFORM == "darwin":
+        result = _macos_pick_folder(title)
     else:
-        from tkinter import filedialog, Tk
-
-        root = Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
-        path = filedialog.askdirectory(title=title)
-        root.destroy()
-        result = path if path else None
+        result = _tkinter_pick_folder(title)
 
     if on_selection:
         on_selection(result)
     return result
+
+
+def _macos_pick_folder(title):
+    import subprocess  # Desktop-only, lazy import
+
+    script = f'POSIX path of (choose folder with prompt "{title}")'
+    cmd = ["osascript", "-e", script]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        path = proc.stdout.strip()
+        return path if path else None
+    except subprocess.CalledProcessError:
+        return None
+
+
+def _tkinter_pick_folder(title):
+    from tkinter import filedialog, Tk  # Desktop-only, lazy import
+
+    root = Tk()
+    root.withdraw()
+    root.attributes("-topmost", True)
+    path = filedialog.askdirectory(title=title)
+    root.destroy()
+    return path if path else None
 
 
 def _desktop_pick_images(title, on_selection):
-    import sys
-    if sys.platform == "darwin":
-        import subprocess
-        script = f'''
-        set chosenFiles to choose file with prompt "{title}" of type {{"public.image"}} with multiple selections allowed
-        set posixPaths to {{}}
-        repeat with aFile in chosenFiles
-            set end of posixPaths to POSIX path of aFile
-        end repeat
-        set AppleScript's text item delimiters to linefeed
-        posixPaths as string
-        '''
-        cmd = ["osascript", "-e", script]
-        try:
-            proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
-            output = proc.stdout.strip()
-            result = output.split("\n") if output else []
-        except subprocess.CalledProcessError:
-            result = []
+    if PLATFORM == "darwin":
+        result = _macos_pick_images(title)
     else:
-        from tkinter import filedialog, Tk
-
-        root = Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
-        files = filedialog.askopenfilenames(
-            title=title,
-            filetypes=[
-                ("Image files", "*.jpg *.jpeg *.png *.JPG *.JPEG *.PNG")]
-        )
-        root.destroy()
-        result = list(files) if files else []
+        result = _tkinter_pick_images(title)
 
     if on_selection:
         on_selection(result)
     return result
+
+
+def _macos_pick_images(title):
+    import subprocess  # Desktop-only, lazy import
+
+    script = f'''
+    set chosenFiles to choose file with prompt "{title}" of type {{"public.image"}} with multiple selections allowed
+    set posixPaths to {{}}
+    repeat with aFile in chosenFiles
+        set end of posixPaths to POSIX path of aFile
+    end repeat
+    set AppleScript's text item delimiters to linefeed
+    posixPaths as string
+    '''
+    cmd = ["osascript", "-e", script]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        output = proc.stdout.strip()
+        return output.split("\n") if output else []
+    except subprocess.CalledProcessError:
+        return []
+
+
+def _tkinter_pick_images(title):
+    from tkinter import filedialog, Tk  # Desktop-only, lazy import
+
+    root = Tk()
+    root.withdraw()
+    root.attributes("-topmost", True)
+    files = filedialog.askopenfilenames(
+        title=title,
+        filetypes=[
+            ("Image files", "*.jpg *.jpeg *.png *.JPG *.JPEG *.PNG")]
+    )
+    root.destroy()
+    return list(files) if files else []
 
 
 def _ios_pick_folder(on_selection):
